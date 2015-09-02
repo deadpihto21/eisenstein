@@ -26,11 +26,11 @@ function eisenstein(){
 jQuery(document).ready(function(){
 	ko.applyBindings(new eisenstein());
 
-	var connection = new WebSocket('ws://192.168.1.12:8080');
+	var connection = new WebSocket('ws://127.0.0.1:8080');
 	connection.onmessage = function (e) {
 		alert('Server: ' + e.data);
 	};
 	$('#chatSend').on('click', function(){
 		connection.send($('#chat').val())
 	})
-})
+});
