@@ -13,15 +13,38 @@
 </head>
 <body>
 	<div class="wrap">
+		<h1>Центр контроля состояния мороженых</h1>
 		<div class="inner">
-			<h1>Центр контроля состояния мороженых</h1>
 			<form action="" method="post" class="form-anabioz">
-				<input type="text" placeholder="№ мороженого" name="id" class="input-id">
-				<!--input type="text" placeholder="Имя мороженого" name="name" class="input-name"-->
-				<input type="submit" value="Получить по ключу">
-				<button class="all-freezes">Получить все данные</button>
+				<div class="wrap-line">
+					<input type="text" placeholder="№ мороженого" name="id">
+					<button class="all-freezes" data-search="id">Получить по номеру</button>
+				</div>
+				<div class="wrap-line">			
+					<input type="text" placeholder="Имя мороженого" name="name">
+					<button class="all-freezes" data-search="name">Получить по имени</button>								
+				</div>
+				<div class="wrap-line">			
+					<input type="text" placeholder="Возраст мороженого" name="age" >
+					<button class="all-freezes" data-search="age">Получить по возрасту</button>								
+				</div>
+				<div class="wrap-line">
+					<label for="sex">
+						<input type="radio" placeholder="Возраст мороженого" name="sex" value="male">Мужчина
+						<input type="radio" placeholder="Возраст мороженого" name="sex" value="female">Женщина				
+					</label>	
+					<button class="all-freezes-sex" data-search="sex">Получить по полу</button>								
+				</div>
+				<div class="wrap-line">			
+					<input type="text" placeholder="Профессия мороженого" name="bsn">
+					<button class="all-freezes" data-search="bsn">Получить по профессии</button>								
+				</div>								
+				<div class="wrap-line">			
+					<input type="text" placeholder="Личный код мороженого" name="code">
+					<button class="all-freezes" data-search="code">Получить по личному коду</button>								
+				</div>												
+				<input type="submit" value="Получить все данные" style="width: 100%;">
 			</form>
-			<div class="names"></div>
 		</div>	
 		<div class="single-freeze"></div>
 	</div>

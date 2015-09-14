@@ -1,0 +1,42 @@
+{
+	"usersLength":3,
+	"0": {
+		"name": "Таня Орт1",
+		"age": "16",
+		"sex": "Женский",
+		"job": "Оператор нейросети",
+		"code": "2A6-1488",
+		"note": "Нет",
+		"medical": "Аллергик",
+		"growth": "170",
+		"weight": "68",
+		"homeland": "Меркурий",
+		"permissions":"['med', 'general']"
+	},
+	"1": {
+		"name": "Таня Орт2",
+		"age": "16",
+		"sex": "Женский",
+		"job": "Оператор нейросети",
+		"code": "333",
+		"note": "Нет",
+		"medical": "Аллергик",
+		"growth": "170",
+		"weight": "68",
+		"homeland": "Меркурий",
+		"permissions":"['med', 'general']"
+	},
+	"2": {
+		"name": "Таня Орт3",
+		"age": "16",
+		"sex": "Женский",
+		"job": "Оператор нейросети",
+		"code": "111",
+		"note": "Нет",
+		"medical": "Аллергик",
+		"growth": "170",
+		"weight": "68",
+		"homeland": "Меркурий",
+		"permissions":"['med', 'general']"
+	}
+}
