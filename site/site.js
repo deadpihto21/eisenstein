@@ -40,6 +40,12 @@ wss.on('connection', function(ws) {
 			fs.writeSync(fd, recivedMessage.chatMessage, 0, recivedMessage.chatMessage.length); //write new data
 			fs.writeSync(fd, data, 0, data.length); //append old data
 			fs.close(fd);
+			fs.readFile('chat/chat.txt', 'utf8', function (err,data) {
+				if (err) {
+					return console.log(err);
+				}
+				wss.broadcast(JSON.stringify({type:'chatData', data:data}));
+			});
 		}
 	});
 });

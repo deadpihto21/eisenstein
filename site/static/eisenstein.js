@@ -22,36 +22,12 @@ function getCookie(cname){
 	}
 	return "";
 }
-
-
-var engineModel = function() {
-	this.engineStatus = ko.observable(100);
-	this.destroyEngine = function(){
-		var destruct = Math.floor((Math.random() * 10) + 1);
-		var result = this.engineStatus() - destruct;
-		if(result > 0) {
-			this.engineStatus(result);
-		}else{
-			this.engineStatus(0);
-		}
-	};
-	this.repairEngine = function(){
-		var repaire = Math.floor((Math.random() * 10) + 1);
-		var result = this.engineStatus() + repaire;
-		if(result <= 100){
-			this.engineStatus(result);
-		}else{
-			this.engineStatus(100);
-		}
-	};
-};
-function eisenstein(){
-	this.engineModel = engineModel;
-
+function deleteCookie( name ) {
+	document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
-function afterLoad(){
-	ko.applyBindings(new eisenstein());
+
+function afterLogin(){
 	$('#chatSend').on('click', function(){
 		var text = $('#chat').val();
 		var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
@@ -59,7 +35,18 @@ function afterLoad(){
 			type:"chat",
 			chatMessage:chatMessage
 		}));
-		$('#chatWindow').prepend(chatMessage);
+	});
+
+	var CurrentDate = new Date();
+	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+	$('.systems').prepend('<b>Привет, '+userProfile.name+'. ' +
+		'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
+		'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
+		'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
+
+	$('.userExit').on('click', function(){
+		deleteCookie('logged');
+		location.reload(true);
 	});
 }
 
@@ -70,22 +57,25 @@ jQuery(document).ready(function(){
 		setTimeout(function(){connection = new WebSocket('ws://127.0.0.1:8080');}, 500);
 	};
 	connection.onmessage = function (e) {
+
+
 		var data = JSON.parse(e.data);
 		if(data.type == 'chatData'){
-			$('#chatWindow').prepend(data.data);
-		}else if(data.type == 'userData'){
+			$('#chatWindow').html(data.data);
+		}
+
+		else if(data.type == 'userData'){
 			allUsers = JSON.parse(data.data);
 			for (var i=0; i<=allUsers.usersLength-1;i++){
 				userCodeBase.push(allUsers[i].code);
 			}
-			console.log(userCodeBase)
 			if(getCookie('logged').length == 0){
 				userName = prompt('STATE YOUR NAME');
 				if(userCodeBase.indexOf(userName) > -1){
 					setCookie('logged', userName, 365);
 					alert('WELCOME');
 					userProfile = allUsers[userCodeBase.indexOf(userName)];
-					afterLoad();
+					afterLogin();
 				}else{
 					alert('PERMISSION DENIED');
 					location.reload(true);
@@ -93,8 +83,10 @@ jQuery(document).ready(function(){
 			}else{
 				userName = getCookie('logged');
 				userProfile = allUsers[userCodeBase.indexOf(userName)];
-				afterLoad();
+				afterLogin();
 			}
 		}
+
+
 	};
 });

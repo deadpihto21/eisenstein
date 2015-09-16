@@ -9,17 +9,13 @@
 
 </head>
 <body>
-
-Here be системы
-<section id="engineSystem" data-bind="with:engineModel">
-	<div data-bind="text:engineStatus"></div>
-	<button data-bind="click:destroyEngine">попиздюрить движоук</button>
-	<button data-bind="click:repairEngine">починить движоук</button>
-
-</section>
-<input id="chat" placeholder="чят" type="text">
-<button id="chatSend">послать</button>
-<div id="chatWindow">
-</div>
+	<div class="systems" style="width: 50%; display: inline-block; vertical-align: top;margin-left: -4px;">
+		Here be системы
+	</div>
+	<div class="chat" style="width: 50%; display: inline-block; vertical-align: top;margin-left: -4px;">
+		<input id="chat" placeholder="чят" type="text">
+		<button id="chatSend">послать</button>
+		<div id="chatWindow"></div>
+	</div>
 </body>
 </html>
