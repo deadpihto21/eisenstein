@@ -12,7 +12,7 @@ wss.broadcast = function broadcast(data) {
 		client.send(data);
 	});
 };
-
+//Hello world
 express().use(express.static(
 	path.join(__dirname, 'static'),
 	staticSiteOptions

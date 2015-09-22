@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+	<title>Медицинский анализатор</title>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-type">
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>		
+</head>
+<body>
+	<div class="wrap">
+		<h1>Медицинский анализатор</h1>
+		<div class="inner">
+			<form action="" method="post" class="form-med">
+				<div class="wrap-line">
+					<input type="text" placeholder="Введите имя">
+					<button class="on-name" data-search="name">Медицинская карта</button>
+				</div>
+				<div class="wrap-line">
+					<input type="text" placeholder="Введите имя или личный код">
+					<button class="on-name" data-search="code">Медицинская карта</button>
+				</div>
+				<div class="wrap-line">
+					<input type="text" name="vk" class="test" placeholder="0000000">
+					<span class="on-name">Тест Войта-Кампфа</span>
+				</div>
+				<div class="wrap-line">
+					<input type="text" name="gm" class="test" placeholder="0000000">
+					<span class="on-name">Тест Гейгера-Мюллера</span>
+				</div>
+				<div class="wrap-line">
+					<input type="text" name="kanzi" class="test" placeholder="0000000">
+					<span class="on-name">Проба Кандзи</span>
+				</div>	
+				<div class="wrap-line">
+					<input type="text" name="allcame" class="test" placeholder="0000000">
+					<span class="on-name">Тест Оллкоума</span>
+				</div>													
+				<button class="treatment" data-search="card">Лечение</button>			
+			</form>
+		</div>	
+		<div class="medical-data"></div>
+	</div>
+</body>
+</html>
