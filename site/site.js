@@ -31,10 +31,16 @@ wss.on('connection', function(ws) {
 		}
 		ws.send(JSON.stringify({type:'userData', data:data}));
 	});
+	fs.readFile('techSystems/systems.json', 'utf8', function (err,data) {
+		if (err) {
+			return console.log(err);
+		}
+		ws.send(JSON.stringify({type:'techData', data:data}));
+	});
 	ws.on('message', function(message) {
 		var recivedMessage = JSON.parse(message);
 		if(recivedMessage.type == 'chat'){
-			var file = "chat/chat.txt"
+			var file = "chat/chat.txt";
 			var data = fs.readFileSync(file); //read existing contents into data
 			var fd = fs.openSync(file, 'w+');
 			fs.writeSync(fd, recivedMessage.chatMessage, 0, recivedMessage.chatMessage.length); //write new data

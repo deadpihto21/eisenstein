@@ -3,7 +3,8 @@ var userCodeBase = [];
 var allUsers = {};
 var userName = '';
 var userProfile = {};
-
+var isLogged = false;
+var techSystems = [];
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
@@ -22,6 +23,7 @@ function getCookie(cname){
 	}
 	return "";
 }
+
 function deleteCookie( name ) {
 	document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
@@ -61,22 +63,61 @@ function afterLogin(){
 		$(this).parent().hide();
 		$(this).parent().prev().show();
 	});
+	isLogged = true;
 }
 
-
+function techBuild(data){
+	$('.techSystems').html();
+	var allSystems = JSON.parse(data);
+	for (var i=0; i<=allSystems.systemsLength-1;i++){
+		techSystems.push(allSystems[i]);
+	}
+	for (var i=0; i <= techSystems.length -1 ; i++){
+		var system = $('<div class="techSystemSingle ' +
+			'system'+i+'-container' +
+			'"><span class="systemName">' +
+			techSystems[i].name +
+			'</span><span class="systemState">' +
+			techSystems[i].statePercent +
+			'</span></div>');
+		if(techSystems[i].statePercent >= 80){
+			system.removeClass('red');
+			system.removeClass('green');
+			system.removeClass('yellow');
+			system.removeClass('grey');
+			system.addClass('green');
+		}else if(techSystems[i].statePercent < 80 && techSystems[i].statePercent >= 35){
+			system.removeClass('red');
+			system.removeClass('green');
+			system.removeClass('yellow');
+			system.removeClass('grey');
+			system.addClass('yellow');
+		}else if(techSystems[i].statePercent < 35 && techSystems[i].statePercent > 0){
+			system.removeClass('red');
+			system.removeClass('green');
+			system.removeClass('yellow');
+			system.removeClass('grey');
+			system.addClass('red');
+		}else if(techSystems[i].statePercent == 0){
+			system.removeClass('red');
+			system.removeClass('green');
+			system.removeClass('yellow');
+			system.removeClass('grey');
+			system.addClass('grey');
+		}
+		$('.techSystems').append(system)
+	}
+}
 
 jQuery(document).ready(function(){
 	connection.onclose = function(){
 		setTimeout(function(){connection = new WebSocket('ws://127.0.0.1:8080');}, 500);
 	};
 	connection.onmessage = function (e) {
-
 		var data = JSON.parse(e.data);
-		if(data.type == 'chatData'){
-			$('#chatWindow').html(data.data);
-		}
 
-		else if(data.type == 'userData'){
+		//load users + login
+		if(data.type == 'userData'){
 			allUsers = JSON.parse(data.data);
 			for (var i=0; i<=allUsers.usersLength-1;i++){
 				userCodeBase.push(allUsers[i].code);
@@ -98,13 +139,24 @@ jQuery(document).ready(function(){
 				afterLogin();
 			}
 		}
+		//load chat
+		else if(data.type == 'chatData'){
+			$('#chatWindow').html(data.data);
+		}
+		//load date
 		else if(data.type == 'dateData'){
-			var CurrentDate = new Date();
-			CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
-			$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
-			'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
-			'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
-			'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
+			if(isLogged == true){
+				var CurrentDate = new Date();
+				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+				$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
+				'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
+				'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
+				'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
+			}
+		}
+		//load tech data
+		else if(data.type == 'techData'){
+			techBuild(data.data);
 		}
 	};
 });

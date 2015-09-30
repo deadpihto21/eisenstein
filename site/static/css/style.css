@@ -2,12 +2,13 @@ a, a:visited{
     color: #000;
     text-decoration: none;
 }
-.systems{
-    width: 50%;
+.systems {
     display: inline-block;
-    vertical-align: top;
     margin-left: -4px;
+    margin-right: 5px;
     position: relative;
+    vertical-align: top;
+    width: 49%;
 }
 .chat{
     width: 50%;
@@ -27,7 +28,7 @@ a, a:visited{
 .systemClose {
     display: block;
     position: absolute;
-    right: 2px;
+    right: 5px;
     top: -21px;
 }
 .system-container {
@@ -43,4 +44,34 @@ a, a:visited{
     vertical-align: middle;
     width: 100px;
     color: #000;
+}
+
+
+.techSystemSingle{
+
+}
+.techSystemSingle.green{
+    background: #008000;
+}
+.techSystemSingle.yellow{
+    background: yellow;
+}
+.techSystemSingle.red{
+    background: darkred;
+}
+.techSystemSingle.grey{
+    background: #999999;
+}
+
+.systemName {
+    display: inline-block;
+    margin-right: -12px;
+    padding: 5px;
+    width: 50%;
+}
+
+.systemState {
+    display: inline-block;
+    text-align: center;
+    width: 50%;
 }
