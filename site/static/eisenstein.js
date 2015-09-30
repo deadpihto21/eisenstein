@@ -39,7 +39,7 @@ function afterLogin(){
 
 	var CurrentDate = new Date();
 	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
-	$('.systems').prepend('<b>Привет, '+userProfile.name+'. ' +
+	$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
 		'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 		'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
 		'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
@@ -47,6 +47,19 @@ function afterLogin(){
 	$('.userExit').on('click', function(){
 		deleteCookie('logged');
 		location.reload(true);
+	});
+	$('.systemOpener').on('click', function(){
+		if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0){
+			$(this).hide();
+			$(this).next().show();
+		}
+		else{
+			alert('PERMISSION DENIED')
+		}
+	});
+	$('.systemClose').on('click', function(){
+		$(this).parent().hide();
+		$(this).parent().prev().show();
 	});
 }
 
@@ -57,7 +70,6 @@ jQuery(document).ready(function(){
 		setTimeout(function(){connection = new WebSocket('ws://127.0.0.1:8080');}, 500);
 	};
 	connection.onmessage = function (e) {
-
 
 		var data = JSON.parse(e.data);
 		if(data.type == 'chatData'){
@@ -86,7 +98,13 @@ jQuery(document).ready(function(){
 				afterLogin();
 			}
 		}
-
-
+		else if(data.type == 'dateData'){
+			var CurrentDate = new Date();
+			CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+			$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
+			'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
+			'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
+			'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
+		}
 	};
 });

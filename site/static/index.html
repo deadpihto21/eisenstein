@@ -6,13 +6,35 @@
 	<script src="jquery.js" type="text/javascript"></script>
 	<script src="knockout-3.3.0.js" type="text/javascript"></script>
 	<script src="eisenstein.js" type="text/javascript"></script>
-
+	<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-	<div class="systems" style="width: 50%; display: inline-block; vertical-align: top;margin-left: -4px;">
-		Here be системы
+	<div class="systems">
+		<div class="welcome"></div>
+		<div id="tech" class="system-container techSystem-container">
+			<a href="#" class="systemOpener techSystem-opener">
+				Система технического мониторинга
+			</a>
+			<div class="system-inner techSystem-inner">
+
+				<a href="#" class="systemClose">
+					Закрыть
+				</a>
+			</div>
+		</div>
+		<div id="med" class="system-container medSystem-container">
+			<a href="#" class="systemOpener medSystem-opener">
+				Система медицинского отсека
+			</a>
+			<div class="system-inner medSystem-inner">
+
+				<a href="#" class="systemClose">
+					Закрыть
+				</a>
+			</div>
+		</div>
 	</div>
-	<div class="chat" style="width: 50%; display: inline-block; vertical-align: top;margin-left: -4px;">
+	<div class="chat">
 		<input id="chat" placeholder="чят" type="text">
 		<button id="chatSend">послать</button>
 		<div id="chatWindow"></div>

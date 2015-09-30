@@ -48,4 +48,7 @@ wss.on('connection', function(ws) {
 			});
 		}
 	});
+	setInterval(function(){
+		wss.broadcast(JSON.stringify({type:'dateData', data:true}));
+	}, 5000)
 });
