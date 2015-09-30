@@ -98,6 +98,7 @@ function techBuild(data){
 			system.removeClass('yellow');
 			system.removeClass('grey');
 			system.addClass('red');
+			techAlertStart()
 		}else if(techSystems[i].statePercent == 0){
 			system.removeClass('red');
 			system.removeClass('green');
@@ -105,13 +106,29 @@ function techBuild(data){
 			system.removeClass('grey');
 			system.addClass('grey');
 		}
-		$('.techSystems').append(system)
+		$('.techSystems').append(system);
 	}
 }
 
-jQuery(document).ready(function(){
+function techAlertStart(){
+	if($('body').hasClass('alarm') == false){
+		$('body').addClass('alarm');
+	}
+	var siren = document.getElementById('siren');
+	siren.play();
+}
+
+function techAlertStop(){
+	$('body').removeClass('alarm');
+	var siren = document.getElementById('siren');
+	siren.load();
+	siren.pause();
+}
+
+jQuery(window).load(function(){
 	connection.onclose = function(){
-		setTimeout(function(){connection = new WebSocket('ws://127.0.0.1:8080');}, 500);
+		alert('CONNECTION ABORTED');
+		location.reload(true);
 	};
 	connection.onmessage = function (e) {
 		var data = JSON.parse(e.data);

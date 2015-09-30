@@ -1,7 +1,36 @@
+@-webkit-keyframes techAlarm {
+    0%   { background: transparent; }
+    50%  { background: darkred; }
+    100% { background: transparent; }
+}
+@-moz-keyframes techAlarm {
+    0%   { background: transparent; }
+    50%  { background: darkred; }
+    100% { background: transparent; }
+}
+@-o-keyframes techAlarm {
+    0%   { background: transparent; }
+    50%  { background: darkred; }
+    100% { background: transparent; }
+}
+@keyframes techAlarm {
+    0%   { background: transparent; }
+    50%  { background: darkred; }
+    100% { background: transparent; }
+}
+
+body.alarm{
+    -webkit-animation: techAlarm 3s infinite;
+    -moz-animation:    techAlarm 3s infinite;
+    -o-animation:      techAlarm 3s infinite;
+    animation:         techAlarm 3s infinite;
+}
+
 a, a:visited{
     color: #000;
     text-decoration: none;
 }
+
 .systems {
     display: inline-block;
     margin-left: -4px;
@@ -10,12 +39,14 @@ a, a:visited{
     vertical-align: top;
     width: 49%;
 }
+
 .chat{
     width: 50%;
     display: inline-block;
     vertical-align:top;
     margin-left: -4px;
 }
+
 .system-inner{
     display: none;
     position: absolute;
@@ -25,16 +56,19 @@ a, a:visited{
     height: 100%;
     background: #f1f1f1;
 }
+
 .systemClose {
     display: block;
     position: absolute;
     right: 5px;
     top: -21px;
 }
+
 .system-container {
     float: left;
     margin-right: 10px;
 }
+
 .systemOpener , .systemOpener:visited{
     border: 1px solid;
     display: inline-block;
@@ -50,15 +84,19 @@ a, a:visited{
 .techSystemSingle{
 
 }
+
 .techSystemSingle.green{
     background: #008000;
 }
+
 .techSystemSingle.yellow{
     background: yellow;
 }
+
 .techSystemSingle.red{
     background: darkred;
 }
+
 .techSystemSingle.grey{
     background: #999999;
 }
