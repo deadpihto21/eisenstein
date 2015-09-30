@@ -2,7 +2,7 @@
 	"systemsLength":1,
 	"0": {
 		"name":"Основная силовая установка",
-		"statePercent":13,
+		"statePercent":80,
 		"stateRepairable":true
 	}
 }
