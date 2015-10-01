@@ -30,6 +30,9 @@ function deleteCookie( name ) {
 
 
 function afterLogin(){
+
+	isLogged = true;
+
 	$('#chatSend').on('click', function(){
 		var text = $('#chat').val();
 		var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
@@ -63,7 +66,7 @@ function afterLogin(){
 		$(this).parent().hide();
 		$(this).parent().prev().show();
 	});
-	isLogged = true;
+
 }
 
 function techBuild(data){
@@ -126,6 +129,7 @@ function techAlertStop(){
 }
 
 jQuery(window).load(function(){
+
 	connection.onclose = function(){
 		alert('CONNECTION ABORTED');
 		location.reload(true);

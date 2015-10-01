@@ -6,7 +6,9 @@
 	<script src="jquery.js" type="text/javascript"></script>
 	<script src="knockout-3.3.0.js" type="text/javascript"></script>
 	<script src="eisenstein.js" type="text/javascript"></script>
+	<link href="css/2048.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+
 </head>
 <body>
 	<div class="systems">
@@ -45,4 +47,74 @@
 <audio id="siren">
 	<source src="sounds/siren.mp3" type="audio/mpeg">
 </audio>
+
+<div class="techgame">
+	<div class="container">
+
+		<div class="game-container">
+			<div class="game-message">
+				<p></p>
+				<div class="lower">
+					<a class="keep-playing-button">Keep going</a>
+					<a class="retry-button">Try again</a>
+				</div>
+			</div>
+
+			<div class="grid-container">
+				<div class="grid-row">
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+				</div>
+				<div class="grid-row">
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+				</div>
+				<div class="grid-row">
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+				</div>
+				<div class="grid-row">
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+					<div class="grid-cell"></div>
+				</div>
+			</div>
+
+			<div class="tile-container">
+
+			</div>
+		</div>
+		<div class="heading">
+			<div class="scores-container">
+				<div class="score-container">0</div>
+				<div class="best-container">0</div>
+			</div>
+		</div>
+
+		<div class="above-game">
+			<a class="restart-button">New Game</a>
+		</div>
+
+	</div>
+
+	<script src="2048/bind_polyfill.js"></script>
+	<script src="2048/classlist_polyfill.js"></script>
+	<script src="2048/animframe_polyfill.js"></script>
+	<script src="2048/keyboard_input_manager.js"></script>
+	<script src="2048/html_actuator.js"></script>
+	<script src="2048/grid.js"></script>
+	<script src="2048/tile.js"></script>
+	<script src="2048/local_storage_manager.js"></script>
+	<script src="2048/game_manager.js"></script>
+	<script src="2048/application.js"></script>
+</div>
+
+
 </html>
