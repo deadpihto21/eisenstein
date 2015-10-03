@@ -22,8 +22,8 @@ $( function() {
 		//console.log(code);
 
 		$.ajax({
-		  	type: 'POST',
-		   	url: 'js/medical_diagnosis.json',
+		  	type: 'GET',
+		   	url: 'medical/js/medical_diagnosis.json',
 			data: vars,
 			dataType: 'json',
 			success: function(msg) {
@@ -49,8 +49,8 @@ $( function() {
 	function ajaxData(search_key, search_code) {
 		var vars = $('.form-med').serialize();
 		$.ajax({
-		  	type: 'POST',
-		   	url: 'js/medical_cards.json',
+		  	type: 'GET',
+		   	url: 'medical/js/medical_cards.json',
 			data: vars,
 			dataType: 'json',
 			success: function(msg) {

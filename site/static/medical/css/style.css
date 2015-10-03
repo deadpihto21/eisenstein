@@ -53,34 +53,34 @@ b {
 
 /****************************************************/
 
-.wrap {
-	padding: 20px 10px;
+#med .wrap {
+	padding: 20px;
 }
-.inner {
+#med #med .inner {
 	display: inline-block;
 	vertical-align: top;
 	width: 400px;
 	margin: 0 30px 0 0;
 }
-.wrap h1{
+#med .wrap h1{
 	margin: 0 0 20px 0;
 	font-size: 24px;
 }
 
-.medical-data {
+#med .medical-data {
 	display: inline-block;
-	width: 400px;
 	vertical-align: top;
+	padding: 20px 0 0 0;
 }
 
-.wrap-line {
+#med .wrap-line {
 	margin: 0 0 10px;
 	height: 22px;
 }
-.wrap-line > input {
+#med .wrap-line > input {
 	float: left;
 	width: 200px;
 }
-.on-name {
+#med .on-name {
 	float: right;
 }
