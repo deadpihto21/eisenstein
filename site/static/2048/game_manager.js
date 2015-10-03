@@ -167,9 +167,10 @@ GameManager.prototype.move = function (direction) {
           self.score += merged.value;
 
           // The mighty 2048 tile
-          if (self.score >= 300) {
+          if (self.score >= 500) {
 			  self.won = true;
-
+            $('.techgame').hide();
+              techRepaire(window.techSystemNumber)
 		  }
         } else {
           self.moveTile(tile, positions.farthest);

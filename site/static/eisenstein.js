@@ -61,6 +61,15 @@ function afterLogin(){
 		deleteCookie('logged');
 		location.reload(true);
 	});
+	$(document).on('click', '.techSystemSingle', function(){
+		if(parseInt($(this).find('.systemState').text()) < 100){
+			window.techSystemNumber = $(this).index()
+			$('.techgame').show();
+			window.myGame.restart()
+		}else{
+			alert('System nominal');
+		}
+	});
 	$('.systemOpener').on('click', function(){
 		if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0){
 			$(this).hide();
@@ -81,10 +90,11 @@ function techBuild(data){
 	$('.techSystems').html(' ');
 	var tempSysArr =[]
 	var allSystems = JSON.parse(data);
-	for (var i=0; i<=allSystems.systemsLength-1;i++){
-		tempSysArr.push(allSystems[i]);
+	for (var i=0; i<=allSystems.systems.length-1;i++){
+		tempSysArr.push(allSystems.systems[i]);
 	}
 	techSystems = tempSysArr;
+	console.log(techSystems)
 	for (var i=0; i <= techSystems.length -1 ; i++){
 		var system = $('<div class="techSystemSingle ' +
 			'system'+i+'-container' +
@@ -111,7 +121,9 @@ function techBuild(data){
 			system.removeClass('yellow');
 			system.removeClass('grey');
 			system.addClass('red');
-			techAlertStart()
+			if(userProfile.permissions.indexOf('tech') > 0){
+				techAlertStart()
+			}
 		}else if(techSystems[i].statePercent == 0){
 			system.removeClass('red');
 			system.removeClass('green');
@@ -121,13 +133,25 @@ function techBuild(data){
 		}
 		$('.techSystems').append(system);
 		if($('.red').length <= 0){
-			techAlertStop()
+			techAlertStop();
 		}
 	}
 }
 
-function techDestroy(){
+function techRepaire(system){
+	var repaireInterval = setInterval(function(){
+		techSystems[system].statePercent +=  Math.floor((Math.random() * 10) + 1);
+		if(techSystems[system].statePercent >= 100){
+			techSystems[system].statePercent = 100;
+			clearInterval(repaireInterval);
+		}
+		connection.send(JSON.stringify({
+			type:"tech",
+			techData:{"systems":techSystems}
+		}));
+	}, 3000);
 
+	return techSystems[system].name;
 }
 function techAlertStart(){
 	if($('body').hasClass('alarm') == false){
@@ -144,15 +168,15 @@ function techAlertStop(){
 	siren.pause();
 }
 
-jQuery(window).load(function(){
+jQuery(document).ready(function(){
 
 	connection.onclose = function(){
 		alert('CONNECTION ABORTED');
 		location.reload(true);
 	};
 	connection.onmessage = function (e) {
-		var data = JSON.parse(e.data);
 
+		var data = JSON.parse(e.data);
 		//load users + login
 		if(data.type == 'userData'){
 			allUsers = JSON.parse(data.data);
@@ -177,11 +201,11 @@ jQuery(window).load(function(){
 			}
 		}
 		//load chat
-		else if(data.type == 'chatData'){
+		if(data.type == 'chatData'){
 			$('#chatWindow').html(data.data);
 		}
 		//load date
-		else if(data.type == 'dateData'){
+		if(data.type == 'dateData'){
 			if(isLogged == true){
 				var CurrentDate = new Date();
 				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
@@ -192,7 +216,7 @@ jQuery(window).load(function(){
 			}
 		}
 		//load tech data
-		else if(data.type == 'techData'){
+		if(data.type == 'techData'){
 			techBuild(data.data);
 		}
 	};

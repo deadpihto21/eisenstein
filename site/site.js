@@ -4,7 +4,7 @@ var fs = require('fs');
 var tws;
 var staticSiteOptions = {
 	portnum: 666,
-	maxAge: 1000 * 60 * 15
+	maxAge: 1000 * 60 * 60
 };
 var WebSocketServer = require('ws').Server,
 	wss = new WebSocketServer({port: 8080});
@@ -24,7 +24,7 @@ function sendTechData(ws){
 		if (err) {
 			return console.log(err);
 		}
-		ws.send(JSON.stringify({type:'techData', data:data}));
+		wss.broadcast(JSON.stringify({type:'techData', data:data}));
 	});
 }
 
@@ -34,13 +34,13 @@ wss.on('connection', function(ws) {
 		if (err) {
 			return console.log(err);
 		}
-		ws.send(JSON.stringify({type:'chatData', data:data}));
+		wss.broadcast(JSON.stringify({type:'chatData', data:data}));
 	});
 	fs.readFile('users/users.json', 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
 		}
-		ws.send(JSON.stringify({type:'userData', data:data}));
+		wss.broadcast(JSON.stringify({type:'userData', data:data}));
 	});
 	sendTechData(ws);
 
@@ -60,13 +60,17 @@ wss.on('connection', function(ws) {
 				wss.broadcast(JSON.stringify({type:'chatData', data:data}));
 			});
 		}
+		if(recivedMessage.type == 'tech'){
+			fs.writeFile("techSystems/systems.json", JSON.stringify(recivedMessage.techData, null, 4), function(err){
+				return console.log(err);
+			})
+		}
 	});
 	setInterval(function(){
 		wss.broadcast(JSON.stringify({type:'dateData', data:true}));
 	}, 5000)
 });
 fs.watch('techSystems/systems.json', function (event, filename) {
-	console.log('event is: ' + event);
 	if (event == 'change') {
 		sendTechData(tws)
 	}

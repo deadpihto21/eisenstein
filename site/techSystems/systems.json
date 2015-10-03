@@ -1,8 +1,14 @@
 {
-	"systemsLength":1,
-	"0": {
-		"name":"Основная силsовая установка",
-		"statePercent":80,
-		"stateRepairable":true
-	}
+    "systems": [
+        {
+            "name": "Основная силовая установка",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Вспомогательная силовая установка",
+            "statePercent": 100,
+            "stateRepairable": true
+        }
+    ]
 }
