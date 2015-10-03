@@ -1,4 +1,5 @@
-var connection = new WebSocket('ws://192.168.1.14:8080');
+//var connection = new WebSocket('ws://192.168.1.14:8080');
+var connection = new WebSocket('ws://127.0.0.1:8080');
 var userCodeBase = [];
 var allUsers = {};
 var userName = '';

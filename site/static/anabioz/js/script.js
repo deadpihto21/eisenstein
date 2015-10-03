@@ -1,13 +1,13 @@
 $( function() {
 
-	var person_max_count = 6;
+	var person_max_count = 100;
 
   	$('.form-anabioz').submit(function(e) {
  		e.preventDefault();
 		var vars = $(this).serialize();
 	    $.ajax({
 	      type: 'GET',
-	      url: 'anabioz/js/anabioz-base.json',
+	      url: 'anabioz/js/anabioz-base2.json',
 				data: vars,
 				dataType: 'json',
 				success: function(msg) {
@@ -54,7 +54,7 @@ $( function() {
 		var vars = $('.form-anabioz').serialize();
 		$.ajax({
 		  	type: 'GET',
-		   	url: 'anabioz/js/anabioz-base.json',
+		   	url: 'anabioz/js/anabioz-base2.json',
 			data: vars,
 			dataType: 'json',
 			success: function(msg) {
