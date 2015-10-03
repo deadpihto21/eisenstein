@@ -1,6 +1,7 @@
 var path = require('path');
 var express = require('express');
 var fs = require('fs');
+var tws;
 var staticSiteOptions = {
 	portnum: 666,
 	maxAge: 1000 * 60 * 15
@@ -18,7 +19,17 @@ express().use(express.static(
 	staticSiteOptions
 )).listen(staticSiteOptions.portnum);
 
+function sendTechData(ws){
+	fs.readFile('techSystems/systems.json', 'utf8', function (err,data) {
+		if (err) {
+			return console.log(err);
+		}
+		ws.send(JSON.stringify({type:'techData', data:data}));
+	});
+}
+
 wss.on('connection', function(ws) {
+	tws = ws;
 	fs.readFile('chat/chat.txt', 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
@@ -31,12 +42,8 @@ wss.on('connection', function(ws) {
 		}
 		ws.send(JSON.stringify({type:'userData', data:data}));
 	});
-	fs.readFile('techSystems/systems.json', 'utf8', function (err,data) {
-		if (err) {
-			return console.log(err);
-		}
-		ws.send(JSON.stringify({type:'techData', data:data}));
-	});
+	sendTechData(ws);
+
 	ws.on('message', function(message) {
 		var recivedMessage = JSON.parse(message);
 		if(recivedMessage.type == 'chat'){
@@ -57,4 +64,10 @@ wss.on('connection', function(ws) {
 	setInterval(function(){
 		wss.broadcast(JSON.stringify({type:'dateData', data:true}));
 	}, 5000)
+});
+fs.watch('techSystems/systems.json', function (event, filename) {
+	console.log('event is: ' + event);
+	if (event == 'change') {
+		sendTechData(tws)
+	}
 });

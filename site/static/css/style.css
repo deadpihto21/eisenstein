@@ -47,6 +47,11 @@ a, a:visited{
     margin-left: -4px;
 }
 
+#chatWindow {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+
 .system-inner{
     display: none;
     position: absolute;

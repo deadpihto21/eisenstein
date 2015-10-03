@@ -1,4 +1,4 @@
-var connection = new WebSocket('ws://127.0.0.1:8080');
+var connection = new WebSocket('ws://192.168.1.14:8080');
 var userCodeBase = [];
 var allUsers = {};
 var userName = '';
@@ -40,8 +40,16 @@ function afterLogin(){
 			type:"chat",
 			chatMessage:chatMessage
 		}));
+		$('#chat').val('');
 	});
-
+	$('#chat').on('keyup', function(e){
+		if(e.keyCode == 13 && e.ctrlKey == false){
+			$('#chatSend').click();
+			$(this).focus()
+		}else if(e.keyCode == 13 && e.ctrlKey == true){
+			$(this).val($(this).val() + "\n");
+		}
+	});
 	var CurrentDate = new Date();
 	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
 	$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
@@ -49,7 +57,7 @@ function afterLogin(){
 		'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
 		'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
 
-	$('.userExit').on('click', function(){
+	$(document).on('click','.userExit', function(){
 		deleteCookie('logged');
 		location.reload(true);
 	});
@@ -70,11 +78,13 @@ function afterLogin(){
 }
 
 function techBuild(data){
-	$('.techSystems').html();
+	$('.techSystems').html(' ');
+	var tempSysArr =[]
 	var allSystems = JSON.parse(data);
 	for (var i=0; i<=allSystems.systemsLength-1;i++){
-		techSystems.push(allSystems[i]);
+		tempSysArr.push(allSystems[i]);
 	}
+	techSystems = tempSysArr;
 	for (var i=0; i <= techSystems.length -1 ; i++){
 		var system = $('<div class="techSystemSingle ' +
 			'system'+i+'-container' +
@@ -110,9 +120,15 @@ function techBuild(data){
 			system.addClass('grey');
 		}
 		$('.techSystems').append(system);
+		if($('.red').length <= 0){
+			techAlertStop()
+		}
 	}
 }
 
+function techDestroy(){
+
+}
 function techAlertStart(){
 	if($('body').hasClass('alarm') == false){
 		$('body').addClass('alarm');
