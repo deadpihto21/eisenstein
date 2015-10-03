@@ -11,7 +11,7 @@
 		"growth": "170",
 		"weight": "68",
 		"homeland": "Меркурий",
-		"permissions":"['med', 'general',]"
+		"permissions":"['med', 'general']"
 	},
 	"1": {
 		"name": "Таня Орт2",
@@ -24,7 +24,7 @@
 		"growth": "170",
 		"weight": "68",
 		"homeland": "Меркурий",
-		"permissions":"['med', 'general', 'tech']"
+		"permissions":"['med', 'general', 'tech', 'anabioz']"
 	},
 	"2": {
 		"name": "Таня Орт3",

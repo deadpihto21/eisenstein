@@ -1,123 +1,71 @@
 /***************** Reset *********************/
 @charset "utf-8";
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-a {
-	outline: none;
-}
-b {
-	font-weight: 900;
-}
-
-/****************************************************/
-
-.wrap {
+#anabioz .wrap {
 	padding: 20px 10px;
 }
-.inner {
+#anabioz .inner {
 	display: inline-block;
 	vertical-align: top;
 	width: 400px;
 	margin: 0 30px 0 0;
 }
-.wrap h1{
+#anabioz .wrap h1{
 	margin: 0 0 20px 0;
 	font-size: 24px;
 }
-.names {
+#anabioz .names {
 	margin: 20px 0 0 0;
 	width: 400px;
 }
-.names table {
+#anabioz .names table {
 	width: 100%;
 }
-.names thead tr {
+#anabioz .names thead tr {
    background: #eee none repeat scroll 0 0;	
 }
-.names thead td {
+#anabioz .names thead td {
 	
 }
-.names tr {
+#anabioz .names tr {
 
 }
-.names td {
+#anabioz .names td {
     border: 1px solid #aaaaaa;
     padding: 4px 12px;
 }
-.single-freeze {
+#anabioz .single-freeze {
 	display: inline-block;
 	width: 400px;
 	vertical-align: top;
 }
-.single-freeze table {
+#anabioz .single-freeze table {
 	width: 100%;
 }
 .single-freeze thead tr {
    background: #eee none repeat scroll 0 0;	
 }
-.single-freeze thead td {
+#anabioz .single-freeze thead td {
 	
 }
-.single-freeze tr {
+#anabioz .single-freeze tr {
 
 }
-.single-freeze td {
+#anabioz .single-freeze td {
     border: 1px solid #aaaaaa;
     padding: 4px 12px;
 }
-.wrap-line {
+#anabioz .wrap-line {
 	margin: 0 0 10px;
 	height: 22px;
 }
-.wrap-line > input {
+#anabioz .wrap-line > input {
 	width: 180px;
 }
-.wrap-line > input,  .wrap-line > label{
+#anabioz .wrap-line > input,  .wrap-line > label{
     float: left;
 }
 
-.all-freezes, .all-freezes-sex {
+#anabioz .all-freezes, .all-freezes-sex {
     float: right;
 }

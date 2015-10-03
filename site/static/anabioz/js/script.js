@@ -7,7 +7,7 @@ $( function() {
 		var vars = $(this).serialize();
 	    $.ajax({
 	      type: 'GET',
-	      url: 'js/anabioz-base.json',
+	      url: 'anabioz/js/anabioz-base.json',
 				data: vars,
 				dataType: 'json',
 				success: function(msg) {
@@ -54,7 +54,7 @@ $( function() {
 		var vars = $('.form-anabioz').serialize();
 		$.ajax({
 		  	type: 'GET',
-		   	url: 'js/anabioz-base.json',
+		   	url: 'anabioz/js/anabioz-base.json',
 			data: vars,
 			dataType: 'json',
 			success: function(msg) {
