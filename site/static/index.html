@@ -6,6 +6,8 @@
 	<script src="jquery.js" type="text/javascript"></script>
 	<script src="knockout-3.3.0.js" type="text/javascript"></script>
 	<script src="eisenstein.js" type="text/javascript"></script>
+	<script src="medical/js/script.js" type="text/javascript"></script>	
+	<link href="medical/css/style.css" rel="stylesheet">	
 	<link href="css/2048.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 
@@ -31,6 +33,40 @@
 				Система медицинского отсека
 			</a>
 			<div class="system-inner medSystem-inner">
+
+				<div class="wrap">
+					<h1>Медицинский анализатор</h1>
+					<div class="inner">
+						<form action="" method="post" class="form-med">
+							<div class="wrap-line">
+								<input type="text" placeholder="Введите имя">
+								<button class="on-name" data-search="name">Медицинская карта</button>
+							</div>
+							<div class="wrap-line">
+								<input type="text" placeholder="Введите имя или личный код">
+								<button class="on-name" data-search="code">Медицинская карта</button>
+							</div>
+							<div class="wrap-line">
+								<input type="text" name="vk" class="test" placeholder="0000000">
+								<span class="on-name">Тест Войта-Кампфа</span>
+							</div>
+							<div class="wrap-line">
+								<input type="text" name="gm" class="test" placeholder="0000000">
+								<span class="on-name">Тест Гейгера-Мюллера</span>
+							</div>
+							<div class="wrap-line">
+								<input type="text" name="kanzi" class="test" placeholder="0000000">
+								<span class="on-name">Проба Кандзи</span>
+							</div>	
+							<div class="wrap-line">
+								<input type="text" name="allcame" class="test" placeholder="0000000">
+								<span class="on-name">Тест Оллкоума</span>
+							</div>													
+							<button class="treatment" data-search="card">Лечение</button>			
+						</form>
+					</div>	
+					<div class="medical-data"></div>
+				</div>
 
 				<a href="#" class="systemClose">
 					Закрыть
