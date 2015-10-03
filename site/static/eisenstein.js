@@ -61,15 +61,22 @@ function afterLogin(){
 		deleteCookie('logged');
 		location.reload(true);
 	});
+
 	$(document).on('click', '.techSystemSingle', function(){
-		if(parseInt($(this).find('.systemState').text()) < 100){
+		console.log(techSystems[$(this).index()])
+		if(parseInt($(this).find('.systemState').text()) < 100 && techSystems[$(this).index()].stateRepairable == true){
 			window.techSystemNumber = $(this).index()
 			$('.techgame').show();
-			window.myGame.restart()
-		}else{
+			window.myGame.restart();
+			techAlertStop();
+		}else if($(this).find('.systemState').text() == 100){
 			alert('System nominal');
+		}else{
+			alert('System unrepairable')
+			techAlertStop();
 		}
 	});
+
 	$('.systemOpener').on('click', function(){
 		if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0){
 			$(this).hide();
@@ -79,6 +86,7 @@ function afterLogin(){
 			alert('PERMISSION DENIED')
 		}
 	});
+
 	$('.systemClose').on('click', function(){
 		$(this).parent().hide();
 		$(this).parent().prev().show();
@@ -94,7 +102,6 @@ function techBuild(data){
 		tempSysArr.push(allSystems.systems[i]);
 	}
 	techSystems = tempSysArr;
-	console.log(techSystems)
 	for (var i=0; i <= techSystems.length -1 ; i++){
 		var system = $('<div class="techSystemSingle ' +
 			'system'+i+'-container' +
@@ -121,7 +128,7 @@ function techBuild(data){
 			system.removeClass('yellow');
 			system.removeClass('grey');
 			system.addClass('red');
-			if(userProfile.permissions.indexOf('tech') > 0){
+			if(userProfile.permissions.indexOf('tech') > 0 && techSystems[i].stateRepairable == true){
 				techAlertStart()
 			}
 		}else if(techSystems[i].statePercent == 0){

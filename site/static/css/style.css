@@ -85,8 +85,8 @@ a, a:visited{
 }
 
 
-.techSystemSingle{
-
+.userExit{
+display: inline!important;
 }
 
 .techSystemSingle.green{

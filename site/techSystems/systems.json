@@ -7,8 +7,8 @@
         },
         {
             "name": "Вспомогательная силовая установка",
-            "statePercent": 100,
-            "stateRepairable": true
+            "statePercent": 30,
+            "stateRepairable": false
         }
     ]
 }
