@@ -100,12 +100,14 @@ function afterLogin(){
 	});
 
 	$('.systemOpener').on('click', function(){
-		if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0){
-			$(this).hide();
-			$(this).next().show();
-		}
-		else{
-			alert('PERMISSION DENIED')
+		if(isLogged == true){
+			if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0){
+				$(this).hide();
+				$(this).next().show();
+			}
+			else{
+				alert('PERMISSION DENIED')
+			}
 		}
 	});
 
