@@ -43,6 +43,28 @@ function afterLogin(){
 		}));
 		$('#chat').val('');
 	});
+	$('.medJournal-entrySend').on('click', function(){
+		var topic = $('.medJournal-topic').val();
+		var text = $('.medJournal-entry').val();
+		var date = new Date();
+		date.setMonth(CurrentDate.getMonth() + 5664)
+		var journalEntry = '<div class="journalEntrySingle">'+
+			'<div>Врач: <span style="font-weight: bold">'+
+			userProfile.name +
+			'</span></div>' +
+			'<div>Дата: <span style="font-weight: bold">'+
+			date.toLocaleString()
+			+'</span></div>' +
+			'<div>Тема: <span style="font-weight: bold">' +
+			 topic +
+			'</span></div>' +
+			'<div>Запись: ' +text+'</div></div>';
+		connection.send(JSON.stringify({
+			type:"medJournal",
+			journalEntry:journalEntry
+		}));
+		$('.medJournal').val('');
+	});
 	$('#chat').on('keyup', function(e){
 		if(e.keyCode == 13 && e.ctrlKey == false){
 			$('#chatSend').click();
@@ -64,16 +86,15 @@ function afterLogin(){
 	});
 
 	$(document).on('click', '.techSystemSingle', function(){
-		console.log(techSystems[$(this).index()])
 		if(parseInt($(this).find('.systemState').text()) < 100 && techSystems[$(this).index()].stateRepairable == true){
-			window.techSystemNumber = $(this).index()
+			window.techSystemNumber = $(this).index();
 			$('.techgame').show();
 			window.myGame.restart();
 			techAlertStop();
 		}else if($(this).find('.systemState').text() == 100){
 			alert('System nominal');
 		}else{
-			alert('System unrepairable')
+			alert('System unrepairable');
 			techAlertStop();
 		}
 	});
@@ -211,6 +232,9 @@ jQuery(document).ready(function(){
 		//load chat
 		if(data.type == 'chatData'){
 			$('#chatWindow').html(data.data);
+		}
+		if(data.type == 'medJournal'){
+			$('.medJournal').html(data.data);
 		}
 		//load date
 		if(data.type == 'dateData'){

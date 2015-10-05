@@ -36,6 +36,12 @@ wss.on('connection', function(ws) {
 		}
 		wss.broadcast(JSON.stringify({type:'chatData', data:data}));
 	});
+	fs.readFile("medJournal/medJournal.txt", 'utf8', function (err,data) {
+		if (err) {
+			return console.log(err);
+		}
+		wss.broadcast(JSON.stringify({type:'medJournal', data:data}));
+	});
 	fs.readFile('users/users.json', 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
@@ -58,6 +64,20 @@ wss.on('connection', function(ws) {
 					return console.log(err);
 				}
 				wss.broadcast(JSON.stringify({type:'chatData', data:data}));
+			});
+		}
+		if(recivedMessage.type == 'medJournal'){
+			var file = "medJournal/medJournal.txt";
+			var data = fs.readFileSync(file); //read existing contents into data
+			var fd = fs.openSync(file, 'w+');
+			fs.writeSync(fd, recivedMessage.journalEntry, 0, recivedMessage.journalEntry.length); //write new data
+			fs.writeSync(fd, data, 0, data.length); //append old data
+			fs.close(fd);
+			fs.readFile("medJournal/medJournal.txt", 'utf8', function (err,data) {
+				if (err) {
+					return console.log(err);
+				}
+				wss.broadcast(JSON.stringify({type:'medJournal', data:data}));
 			});
 		}
 		if(recivedMessage.type == 'tech'){

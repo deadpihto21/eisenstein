@@ -127,3 +127,8 @@ display: inline!important;
     width: 100%;
     display: none;
 }
+
+.journalEntrySingle {
+    border-bottom: 1px dashed;
+    margin-bottom: 5px;
+}

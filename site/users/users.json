@@ -24,7 +24,7 @@
 		"growth": "170",
 		"weight": "68",
 		"homeland": "Меркурий",
-		"permissions":"['med', 'general', 'tech', 'anabioz']"
+		"permissions":"['med', 'general', 'tech', 'anabioz', 'medJournal']"
 	},
 	"2": {
 		"name": "Таня Орт3",
