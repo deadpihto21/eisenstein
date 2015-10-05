@@ -6,6 +6,7 @@ var userName = '';
 var userProfile = {};
 var isLogged = false;
 var techSystems = [];
+var redBanner = false;
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
@@ -30,10 +31,18 @@ function deleteCookie( name ) {
 }
 
 
-function afterLogin(){
+function afterLogin() {
 
 	isLogged = true;
-
+	if (userProfile.permissions.indexOf('admin') > 0){
+		$('#redBanner').show();
+		$('#redBanner').on('click', function () {
+			connection.send(JSON.stringify({
+				type:"redBanner",
+				redBanner:true
+			}));
+		});
+	}
 	$('#chatSend').on('click', function(){
 		var text = $('#chat').val();
 		var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
@@ -43,6 +52,17 @@ function afterLogin(){
 		}));
 		$('#chat').val('');
 	});
+
+	$('#chatSendSpec').on('click', function(){
+		var text = $('#chatSpec').val();
+		var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
+		connection.send(JSON.stringify({
+			type:"specChat",
+			specChatMessage:chatMessage
+		}));
+		$('#chat').val('');
+	});
+
 	$('.medJournal-entrySend').on('click', function(){
 		var topic = $('.medJournal-topic').val();
 		var text = $('.medJournal-entry').val();
@@ -101,7 +121,7 @@ function afterLogin(){
 
 	$('.systemOpener').on('click', function(){
 		if(isLogged == true){
-			if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0){
+			if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0 || userProfile.permissions.indexOf('omni') > 0){
 				$(this).hide();
 				$(this).next().show();
 			}
@@ -115,6 +135,9 @@ function afterLogin(){
 		$(this).parent().hide();
 		$(this).parent().prev().show();
 	});
+	if(userProfile.permissions.indexOf('omni') > 0){
+		$('#specialChat').show();
+	}
 
 }
 
@@ -152,8 +175,10 @@ function techBuild(data){
 			system.removeClass('yellow');
 			system.removeClass('grey');
 			system.addClass('red');
-			if(userProfile.permissions.indexOf('tech') > 0 && techSystems[i].stateRepairable == true){
-				techAlertStart()
+			if(userProfile){
+				if(userProfile.permissions.indexOf('tech') > 0 && techSystems[i].stateRepairable == true){
+					techAlertStart()
+				}
 			}
 		}else if(techSystems[i].statePercent == 0){
 			system.removeClass('red');
@@ -192,7 +217,22 @@ function techAlertStart(){
 	siren.play();
 }
 
+function redAlertStart(){
+	if($('body').hasClass('alarm') == false){
+		$('body').addClass('alarm');
+	}
+	var siren = document.getElementById('siren');
+	siren.play();
+}
+
 function techAlertStop(){
+	$('body').removeClass('alarm');
+	var siren = document.getElementById('siren');
+	siren.load();
+	siren.pause();
+}
+
+function redAlertStop(){
 	$('body').removeClass('alarm');
 	var siren = document.getElementById('siren');
 	siren.load();
@@ -235,6 +275,9 @@ jQuery(document).ready(function(){
 		if(data.type == 'chatData'){
 			$('#chatWindow').html(data.data);
 		}
+		if(data.type == 'specChatData'){
+			$('#chatWindowSpec').html(data.data);
+		}
 		if(data.type == 'medJournal'){
 			$('.medJournal').html(data.data);
 		}
@@ -252,6 +295,16 @@ jQuery(document).ready(function(){
 		//load tech data
 		if(data.type == 'techData'){
 			techBuild(data.data);
+		}
+
+		if(data.type == 'redBanner'){
+			if(redBanner == false){
+				redBanner = true;
+				redAlertStart();
+			}else{
+				redBanner = false;
+				redAlertStop();
+			}
 		}
 	};
 });

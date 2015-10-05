@@ -30,6 +30,7 @@
 				</a>
 			</div>
 		</div>
+
 		<div id="med" class="system-container medSystem-container">
 			<a href="#" class="systemOpener medSystem-opener">
 				Система медицинского отсека
@@ -124,6 +125,7 @@
 				</a>
 			</div>
 		</div>
+
 		<div id="medJournal" class="system-container medJournalSystem-container">
 			<a href="#" class="systemOpener medJournalSystem-opener">
 				Медицинский журнал
@@ -148,6 +150,24 @@
 			</div>
 		</div>
 
+		<div id="specialChat" style="display: none" class="system-container specialChat-container">
+			<a href="#" class="systemOpener specialChat-opener">
+				%SYSTEM%
+			</a>
+			<div class="system-inner specialChat-inner">
+				<div class="specialChat">
+					<textarea id="chatSpec" placeholder="чят" type="text"></textarea>
+					<button id="chatSendSpec">послать</button>
+					<div id="chatWindowSpec"></div>
+				</div>
+				<a href="#" class="systemClose">
+					Закрыть
+				</a>
+			</div>
+		</div>
+		<div id="redBanner" style="display: none;background: red; color:white; font-weight: bold;" class="system-container redBanner-container">
+			ЕБАШЬ!
+		</div>
 	</div>
 	<div class="chat">
 		<textarea id="chat" placeholder="чят" type="text"></textarea>

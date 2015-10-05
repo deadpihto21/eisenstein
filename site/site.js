@@ -36,6 +36,12 @@ wss.on('connection', function(ws) {
 		}
 		wss.broadcast(JSON.stringify({type:'chatData', data:data}));
 	});
+	fs.readFile('chat/specChat.txt', 'utf8', function (err,data) {
+		if (err) {
+			return console.log(err);
+		}
+		wss.broadcast(JSON.stringify({type:'specChatData', data:data}));
+	});
 	fs.readFile("medJournal/medJournal.txt", 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
@@ -66,6 +72,25 @@ wss.on('connection', function(ws) {
 				wss.broadcast(JSON.stringify({type:'chatData', data:data}));
 			});
 		}
+		if(recivedMessage.type == 'specChat'){
+			var file = "chat/specChat.txt";
+			var data = fs.readFileSync(file); //read existing contents into data
+			var fd = fs.openSync(file, 'w+');
+			fs.writeSync(fd, recivedMessage.specChatMessage, 0, recivedMessage.specChatMessage.length); //write new data
+			fs.writeSync(fd, data, 0, data.length); //append old data
+			fs.close(fd);
+			fs.readFile('chat/specChat.txt', 'utf8', function (err,data) {
+				if (err) {
+					return console.log(err);
+				}
+				wss.broadcast(JSON.stringify({type:'specChatData', data:data}));
+			});
+		}
+
+		if(recivedMessage.type == 'redBanner'){
+			wss.broadcast(JSON.stringify({type:'redBanner', data:true}));
+		}
+
 		if(recivedMessage.type == 'medJournal'){
 			var file = "medJournal/medJournal.txt";
 			var data = fs.readFileSync(file); //read existing contents into data

@@ -1,5 +1,5 @@
 {
-	"usersLength":3,
+	"usersLength":4,
 	"0": {
 		"name": "Таня Орт",
 		"age": "16",
@@ -24,7 +24,7 @@
 		"growth": "170",
 		"weight": "68",
 		"homeland": "Меркурий",
-		"permissions":"['med', 'general', 'tech', 'anabioz', 'medJournal']"
+		"permissions":"['omni']"
 	},
 	"2": {
 		"name": "Таня Орт3",
@@ -38,5 +38,18 @@
 		"weight": "68",
 		"homeland": "Меркурий",
 		"permissions":"['med', 'general']"
+	},
+	"3": {
+		"name": "Эйзенштейн",
+		"age": "1",
+		"sex": "Муженский",
+		"job": "Все",
+		"code": "yobapeka1488",
+		"note": "Нет",
+		"medical": "Нет",
+		"growth": "666",
+		"weight": "9001",
+		"homeland": "Меркурий",
+		"permissions":"['omni', 'admin']"
 	}
 }

@@ -82,6 +82,7 @@ a, a:visited{
     vertical-align: middle;
     width: 100px;
     color: #000;
+    min-height: 60px;
 }
 
 
