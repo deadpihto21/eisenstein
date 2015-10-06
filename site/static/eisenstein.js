@@ -249,7 +249,7 @@ jQuery(document).ready(function(){
 
 		var data = JSON.parse(e.data);
 		//load users + login
-		if(data.type == 'userData'){
+		if(data.type == 'userData' && data.update == false){
 			allUsers = JSON.parse(data.data);
 			for (var i=0; i<=allUsers.usersLength-1;i++){
 				userCodeBase.push(allUsers[i].code);
@@ -270,6 +270,9 @@ jQuery(document).ready(function(){
 				userProfile = allUsers[userCodeBase.indexOf(userName)];
 				afterLogin();
 			}
+		}else if(data.type == 'userData' && data.update == true){
+			deleteCookie('logged');
+			location.reload(true);
 		}
 		//load chat
 		if(data.type == 'chatData'){

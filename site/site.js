@@ -27,37 +27,53 @@ function sendTechData(ws){
 		wss.broadcast(JSON.stringify({type:'techData', data:data}));
 	});
 }
-
-wss.on('connection', function(ws) {
-	tws = ws;
-	fs.readFile('chat/chat.txt', 'utf8', function (err,data) {
+function sendChatData(ws) {
+	fs.readFile('', 'utf8', function (err, data) {
 		if (err) {
 			return console.log(err);
 		}
-		wss.broadcast(JSON.stringify({type:'chatData', data:data}));
+		wss.broadcast(JSON.stringify({type: 'chatData', data: data}));
 	});
+}
+function sendSpecChatData(ws){
 	fs.readFile('chat/specChat.txt', 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
 		}
 		wss.broadcast(JSON.stringify({type:'specChatData', data:data}));
 	});
-	fs.readFile("medJournal/medJournal.txt", 'utf8', function (err,data) {
+}
+function sendMedJournalData(ws) {
+	fs.readFile("medJournal/medJournal.txt", 'utf8', function (err, data) {
 		if (err) {
 			return console.log(err);
 		}
-		wss.broadcast(JSON.stringify({type:'medJournal', data:data}));
+		wss.broadcast(JSON.stringify({type: 'medJournal', data: data}));
 	});
+}
+function sendUsersData(ws, update){
 	fs.readFile('users/users.json', 'utf8', function (err,data) {
 		if (err) {
 			return console.log(err);
 		}
-		wss.broadcast(JSON.stringify({type:'userData', data:data}));
+		wss.broadcast(JSON.stringify({type:'userData', data:data, update:update}));
 	});
+}
+
+wss.on('connection', function(ws) {
+
+	tws = ws;
+
+	sendUsersData(ws, false);
+	sendChatData(ws);
+	sendSpecChatData(ws);
+	sendMedJournalData(ws);
 	sendTechData(ws);
 
 	ws.on('message', function(message) {
+
 		var recivedMessage = JSON.parse(message);
+
 		if(recivedMessage.type == 'chat'){
 			var file = "chat/chat.txt";
 			var data = fs.readFileSync(file); //read existing contents into data
@@ -65,13 +81,8 @@ wss.on('connection', function(ws) {
 			fs.writeSync(fd, recivedMessage.chatMessage, 0, recivedMessage.chatMessage.length); //write new data
 			fs.writeSync(fd, data, 0, data.length); //append old data
 			fs.close(fd);
-			fs.readFile('chat/chat.txt', 'utf8', function (err,data) {
-				if (err) {
-					return console.log(err);
-				}
-				wss.broadcast(JSON.stringify({type:'chatData', data:data}));
-			});
 		}
+
 		if(recivedMessage.type == 'specChat'){
 			var file = "chat/specChat.txt";
 			var data = fs.readFileSync(file); //read existing contents into data
@@ -79,16 +90,6 @@ wss.on('connection', function(ws) {
 			fs.writeSync(fd, recivedMessage.specChatMessage, 0, recivedMessage.specChatMessage.length); //write new data
 			fs.writeSync(fd, data, 0, data.length); //append old data
 			fs.close(fd);
-			fs.readFile('chat/specChat.txt', 'utf8', function (err,data) {
-				if (err) {
-					return console.log(err);
-				}
-				wss.broadcast(JSON.stringify({type:'specChatData', data:data}));
-			});
-		}
-
-		if(recivedMessage.type == 'redBanner'){
-			wss.broadcast(JSON.stringify({type:'redBanner', data:true}));
 		}
 
 		if(recivedMessage.type == 'medJournal'){
@@ -98,25 +99,52 @@ wss.on('connection', function(ws) {
 			fs.writeSync(fd, recivedMessage.journalEntry, 0, recivedMessage.journalEntry.length); //write new data
 			fs.writeSync(fd, data, 0, data.length); //append old data
 			fs.close(fd);
-			fs.readFile("medJournal/medJournal.txt", 'utf8', function (err,data) {
-				if (err) {
-					return console.log(err);
-				}
-				wss.broadcast(JSON.stringify({type:'medJournal', data:data}));
-			});
 		}
+
+		if(recivedMessage.type == 'redBanner'){
+			wss.broadcast(JSON.stringify({type:'redBanner', data:true}));
+		}
+
 		if(recivedMessage.type == 'tech'){
 			fs.writeFile("techSystems/systems.json", JSON.stringify(recivedMessage.techData, null, 4), function(err){
 				return console.log(err);
 			})
 		}
+
 	});
+
 	setInterval(function(){
 		wss.broadcast(JSON.stringify({type:'dateData', data:true}));
-	}, 5000)
+	}, 5000);
+
 });
+
 fs.watch('techSystems/systems.json', function (event, filename) {
 	if (event == 'change') {
 		sendTechData(tws)
+	}
+});
+
+fs.watch('chat/chat.txt', function (event, filename) {
+	if (event == 'change') {
+		sendChatData(tws)
+	}
+});
+
+fs.watch('chat/specChat.txt', function (event, filename) {
+	if (event == 'change') {
+		sendSpecChatData(tws);
+	}
+});
+
+fs.watch('medJournal/medJournal.txt', function (event, filename) {
+	if (event == 'change') {
+		sendMedJournalData(tws);
+	}
+});
+
+fs.watch('users/users.json', function (event, filename) {
+	if (event == 'change') {
+		sendUsersData(tws, true);
 	}
 });
