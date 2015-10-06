@@ -1,6 +1,6 @@
 $( function() {
 
-	var person_max_count = 100;
+	var person_max_count = 200;
 
   	$('.form-anabioz').submit(function(e) {
  		e.preventDefault();
