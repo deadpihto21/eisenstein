@@ -28,7 +28,7 @@ function sendTechData(ws){
 	});
 }
 function sendChatData(ws) {
-	fs.readFile('', 'utf8', function (err, data) {
+	fs.readFile('chat/chat.txt', 'utf8', function (err, data) {
 		if (err) {
 			return console.log(err);
 		}

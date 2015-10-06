@@ -1,2 +1,3 @@
-<div><span style="font-weight: bold">Таня Орт2: </span>Суп чят
+<div><span style="font-weight: bold">Эйзенштейн: </span>some chat message
+</div><div><span style="font-weight: bold">Таня Орт2: </span>Суп чят
 </div>
