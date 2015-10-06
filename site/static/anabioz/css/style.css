@@ -35,9 +35,11 @@
     padding: 4px 12px;
 }
 #anabioz .single-freeze {
-	display: inline-block;
-	width: 400px;
-	vertical-align: top;
+    display: inline-block;
+    height: 300px;
+    overflow-y: scroll;
+    vertical-align: top;
+    width: 400px;
 }
 #anabioz .single-freeze table {
 	width: 100%;

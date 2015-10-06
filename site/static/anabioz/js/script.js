@@ -74,7 +74,7 @@ $( function() {
 						$('.single-freeze').html('Такого номера нет в базе!');
 					}
 				}
-				if((search_code == 'name') || (search_code == 'age') || (search_code == 'code')) {
+				if((search_code == 'code')) {
 					for(var i = 0; i < person_max_count; i++) {
 						if(msg[i][search_code] == search_key) {
 							var single = '<table>';
@@ -111,7 +111,7 @@ $( function() {
 						}
 					}
 				}
-				if((search_code == 'sex') || (search_code == 'bsn'))  {
+				if((search_code == 'sex') || (search_code == 'bsn') || (search_code == 'name') || (search_code == 'age'))  {
 					var search_wrap = '';
 					switch (search_code) {
 						case 'sex':
@@ -119,18 +119,30 @@ $( function() {
 							break;
 						case 'bsn':
 							search_wrap = 'Профессия';
-							break;																	
+							break;
+						case 'name':
+							search_wrap = 'Номер';
+							break;
+						case 'age':
+							search_wrap = 'Номер';
+							break;																														
 						}					
 					var table = '<table><thead><tr><td>' + search_wrap + '</td><td>Имя</td></tr></thead>';
 					var flag = false;
 					for(var i = 0; i < person_max_count; i++) {
 						if(msg[i][search_code] == search_key) {
-							table = table + '<tr><td>' + search_key + '</td><td>' + msg[i]['name'] + '</td></tr>';
+							if((search_code != 'name') || (search_code != 'age')) {
+								table = table + '<tr><td>' + search_key + '</td><td>' + msg[i]['name'] + '</td></tr>';								
+							} else {
+								table = table + '<tr><td><a href="#" class="single-link">' + i + '</a></td><td>' + msg[i]['name'] + '</td></tr>';
+							}
 							flag = true;
 						}
 					}
 					table = table + '</table>';
 					if((search_code == 'bsn') && (flag == false)) table = 'Никого с такой профессией не обнаружено!'
+					if((search_code == 'name') && (flag == false)) table = 'Никого с таким именем не обнаружено!'	
+					if((search_code == 'age') && (flag == false)) table = 'Никого с таким возрастом не обнаружено!'
 					$('.single-freeze').html(table);					
 
 					$('.single-link').on('click', function(e){
