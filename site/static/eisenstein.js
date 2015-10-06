@@ -143,7 +143,7 @@ function afterLogin() {
 
 function techBuild(data){
 	$('.techSystems').html(' ');
-	var tempSysArr =[]
+	var tempSysArr =[];
 	var allSystems = JSON.parse(data);
 	for (var i=0; i<=allSystems.systems.length-1;i++){
 		tempSysArr.push(allSystems.systems[i]);
