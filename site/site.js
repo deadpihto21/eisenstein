@@ -8,6 +8,8 @@ var staticSiteOptions = {
 };
 var WebSocketServer = require('ws').Server,
 	wss = new WebSocketServer({port: 8080});
+var redBanner = false;
+
 wss.broadcast = function broadcast(data) {
 	wss.clients.forEach(function each(client) {
 		client.send(data);
@@ -51,6 +53,14 @@ function sendMedJournalData(ws) {
 		wss.broadcast(JSON.stringify({type: 'medJournal', data: data}));
 	});
 }
+function sendBortJournalData(ws) {
+	fs.readFile("bortJournal/bortJournal.txt", 'utf8', function (err, data) {
+		if (err) {
+			return console.log(err);
+		}
+		wss.broadcast(JSON.stringify({type: 'bortJournal', data: data}));
+	});
+}
 function sendUsersData(ws, update){
 	fs.readFile('users/users.json', 'utf8', function (err,data) {
 		if (err) {
@@ -69,6 +79,7 @@ wss.on('connection', function(ws) {
 	sendSpecChatData(ws);
 	sendMedJournalData(ws);
 	sendTechData(ws);
+	sendBortJournalData(ws);
 
 	ws.on('message', function(message) {
 
@@ -100,9 +111,26 @@ wss.on('connection', function(ws) {
 			fs.writeSync(fd, data, 0, data.length); //append old data
 			fs.close(fd);
 		}
+		if(recivedMessage.type == 'bortJournal'){
+			var file = "bortJournal/bortJournal.txt";
+			var data = fs.readFileSync(file); //read existing contents into data
+			var fd = fs.openSync(file, 'w+');
+			fs.writeSync(fd, recivedMessage.journalEntry, 0, recivedMessage.journalEntry.length); //write new data
+			fs.writeSync(fd, data, 0, data.length); //append old data
+			fs.close(fd);
+		}
 
 		if(recivedMessage.type == 'redBanner'){
-			wss.broadcast(JSON.stringify({type:'redBanner', data:true}));
+			if(redBanner == false){
+				redBanner = true;
+				var alarmInterval = setInterval(function(){
+					wss.broadcast(JSON.stringify({type:'redBanner', data:redBanner}));
+				}, 5000);
+			}else{
+				redBanner = false;
+				clearInterval(alarmInterval);
+			}
+
 		}
 
 		if(recivedMessage.type == 'tech'){
@@ -140,6 +168,11 @@ fs.watch('chat/specChat.txt', function (event, filename) {
 fs.watch('medJournal/medJournal.txt', function (event, filename) {
 	if (event == 'change') {
 		sendMedJournalData(tws);
+	}
+});
+fs.watch('bortJournal/bortJournal.txt', function (event, filename) {
+	if (event == 'change') {
+		sendBortJournalData(tws);
 	}
 });
 

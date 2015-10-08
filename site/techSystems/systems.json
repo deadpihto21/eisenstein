@@ -7,8 +7,79 @@
         },
         {
             "name": "Вспомогательная силовая установка",
-            "statePercent": 30,
-            "stateRepairable": false
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Система подачи воздуха",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Система поддержания температурного режима",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Система управления центрифугой",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Электропроводка",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Двигательная установка (разгонный блок)",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Двигательная установка (блок торможения)",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Система активной защиты",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Система анабиозных камер",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Головная магнитная ловушка",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "3D-принтер",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Подключения нейроинтерфейса",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Шлюзово-стыковочная камера",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+        {
+            "name": "Система контроля за целостностью обшивки",
+            "statePercent": 100,
+            "stateRepairable": true
+        },
+		{
+            "name": "Система корабельных оповещений",
+            "statePercent": 100,
+            "stateRepairable": true,
+			"isSiren":true
         }
     ]
 }

@@ -1,0 +1,1 @@
+<div class="journalEntrySingle"><div>Капитан: <span style="font-weight: bold">Алиса Адерли</span></div><div>Дата: <span style="font-weight: bold">10/8/2487, 1:12:50 PM</span></div><div>Тема: <span style="font-weight: bold">Topic</span></div><div>Запись: Content</div></div>

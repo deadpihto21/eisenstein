@@ -168,6 +168,29 @@
 		<div id="redBanner" style="display: none;background: red; color:white; font-weight: bold;" class="system-container redBanner-container">
 			ЕБАШЬ!
 		</div>
+		<div id="bortJournal" class="system-container bortJournal-container">
+			<a href="#" class="systemOpener bortJournal-opener">
+				Бортжурнал
+			</a>
+			<div class="system-inner bortJournal-inner">
+				<div class="bortJournal-addNewEntry" style="border-bottom:2px solid #000000;padding-bottom:5px;margin-bottom: 5px;">
+					<h4 style="margin: 0 5px;">Добавить запись</h4>
+					<br>
+					<input placeholder="Тема" class="bortJournal-topic">
+					<br>
+					<textarea placeholder="Содержимое" class="bortJournal-entry" style="width:80%"></textarea>
+					<br>
+					<button class="bortJournal-entrySend">Отправить</button>
+				</div>
+				<div class="bortJournal">
+
+				</div>
+
+				<a href="#" class="systemClose">
+					Закрыть
+				</a>
+			</div>
+		</div>
 	</div>
 	<div class="chat">
 		<textarea id="chat" placeholder="чят" type="text"></textarea>
@@ -175,8 +198,8 @@
 		<div id="chatWindow"></div>
 	</div>
 </body>
-<audio id="siren">
-	<source src="sounds/siren.mp3" type="audio/mpeg" loop>
+<audio id="siren" loop="loop">
+	<source src="sounds/siren.mp3" type="audio/mpeg" >
 </audio>
 
 <div class="techgame">

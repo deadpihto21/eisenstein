@@ -19,11 +19,20 @@
     100% { background: transparent; }
 }
 
-body.alarm{
+body.alarm, body.redBanner{
     -webkit-animation: techAlarm 3s infinite;
     -moz-animation:    techAlarm 3s infinite;
     -o-animation:      techAlarm 3s infinite;
     animation:         techAlarm 3s infinite;
+}
+body.redBanner:before {
+    content: "КРАСНЫЙ ВЫМПЕЛ";
+    font-size: 96px;
+    left: 24vw;
+    opacity: 0.3;
+    position: absolute;
+    top: 42vh;
+    color: red;
 }
 
 a, a:visited{
@@ -83,6 +92,7 @@ a, a:visited{
     width: 100px;
     color: #000;
     min-height: 60px;
+    margin-bottom: 10px;
 }
 
 

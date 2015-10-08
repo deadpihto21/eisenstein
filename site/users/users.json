@@ -1,55 +1,34 @@
 {
-	"usersLength":4,
-	"0": {
-		"name": "Таня Орт",
-		"age": "16",
-		"sex": "Женский",
-		"job": "Оператор нейросети",
-		"code": "2A6-1488",
-		"note": "Нет",
-		"medical": "Аллергик",
-		"growth": "170",
-		"weight": "68",
-		"homeland": "Меркурий",
-		"permissions":"['med', 'general']"
-	},
-	"1": {
-		"name": "Таня Орт2",
-		"age": "16",
-		"sex": "Женский",
-		"job": "Оператор нейросети",
-		"code": "333",
-		"note": "Нет",
-		"medical": "Аллергик",
-		"growth": "170",
-		"weight": "68",
-		"homeland": "Меркурий",
-		"permissions":"['omni']"
-	},
-	"2": {
-		"name": "Таня Орт3",
-		"age": "16",
-		"sex": "Женский",
-		"job": "Оператор нейросети",
-		"code": "111",
-		"note": "Нет",
-		"medical": "Аллергик",
-		"growth": "170",
-		"weight": "68",
-		"homeland": "Меркурий",
-		"permissions":"['med', 'general']"
-	},
-	"3": {
-		"name": "Эйзенштейн",
-		"age": "1",
-		"sex": "Муженский",
-		"job": "Все",
-		"code": "yobapeka1488",
-		"note": "Нет",
-		"medical": "Нет",
-		"growth": "666",
-		"weight": "9001",
-		"homeland": "Меркурий",
-		"permissions":"['omni', 'admin']"
-	}
+	"users":[
+		{
+			"name": "Таня Орт",
+			"job": "оператор нейросети",
+			"code": "2A6-1488",
+			"permissions":"['med', 'general']"
+		},
+		{
+			"name": "Таня Орт2",
+			"job": "оператор нейросети",
+			"code": "333",
+			"permissions":"['omni']"
+		},
+		{
+			"name": "Таня Орт3",
+			"job": "оператор нейросети",
+			"code": "111",
+			"permissions":"['med', 'general']"
+		},
+		{
+			"name": "Эйзенштейн",
+			"job": "ИИ",
+			"code": "yobapeka1488",
+			"permissions":"['omni', 'admin']"
+		},
+		{
+			"name": "Алиса Адерли",
+			"job": "капитан",
+			"code": "444",
+			"permissions":"['anabioz', 'captain', bortJournal]"
+		}
+	]
 }

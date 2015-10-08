@@ -7,6 +7,8 @@ var userProfile = {};
 var isLogged = false;
 var techSystems = [];
 var redBanner = false;
+var sirenActive = false;
+
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
@@ -67,7 +69,7 @@ function afterLogin() {
 		var topic = $('.medJournal-topic').val();
 		var text = $('.medJournal-entry').val();
 		var date = new Date();
-		date.setMonth(CurrentDate.getMonth() + 5664)
+		date.setMonth(CurrentDate.getMonth() + 5664);
 		var journalEntry = '<div class="journalEntrySingle">'+
 			'<div>Врач: <span style="font-weight: bold">'+
 			userProfile.name +
@@ -85,6 +87,33 @@ function afterLogin() {
 		}));
 		$('.medJournal').val('');
 	});
+	$('.bortJournal-entrySend').on('click', function(){
+		if(userProfile.permissions.indexOf('capitan') > 0){
+			var topic = $('.bortJournal-topic').val();
+			var text = $('.bortJournal-entry').val();
+			var date = new Date();
+			date.setMonth(CurrentDate.getMonth() + 5664);
+			var journalEntry = '<div class="journalEntrySingle">'+
+				'<div>Капитан: <span style="font-weight: bold">'+
+				userProfile.name +
+				'</span></div>' +
+				'<div>Дата: <span style="font-weight: bold">'+
+				date.toLocaleString()
+				+'</span></div>' +
+				'<div>Тема: <span style="font-weight: bold">' +
+				 topic +
+				'</span></div>' +
+				'<div>Запись: ' +text+'</div></div>';
+			connection.send(JSON.stringify({
+				type:"bortJournal",
+				journalEntry:journalEntry
+			}));
+			$('.bortJournal').val('');
+		}else{
+			alert('Captain permissions required');
+		}
+	});
+
 	$('#chat').on('keyup', function(e){
 		if(e.keyCode == 13 && e.ctrlKey == false){
 			$('#chatSend').click();
@@ -95,7 +124,7 @@ function afterLogin() {
 	});
 	var CurrentDate = new Date();
 	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
-	$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
+	$('.welcome').html('<b>Привет, '+userProfile.job +' '+ userProfile.name+'. ' +
 		'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 		'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
 		'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
@@ -121,7 +150,9 @@ function afterLogin() {
 
 	$('.systemOpener').on('click', function(){
 		if(isLogged == true){
-			if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0 || userProfile.permissions.indexOf('omni') > 0){
+			if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0
+				|| userProfile.permissions.indexOf('omni') > 0
+				|| $(this).parent().attr('id')== 'bortJournal'){
 				$(this).hide();
 				$(this).next().show();
 			}
@@ -186,6 +217,9 @@ function techBuild(data){
 			system.removeClass('yellow');
 			system.removeClass('grey');
 			system.addClass('grey');
+			if(techSystems[i].isSiren){
+				sirenActive = false;
+			}
 		}
 		$('.techSystems').append(system);
 		if($('.red').length <= 0){
@@ -214,15 +248,22 @@ function techAlertStart(){
 		$('body').addClass('alarm');
 	}
 	var siren = document.getElementById('siren');
-	siren.play();
+	if(siren.paused && sirenActive == true){
+		siren.play();
+	}
 }
 
 function redAlertStart(){
 	if($('body').hasClass('alarm') == false){
 		$('body').addClass('alarm');
 	}
+	if($('body').hasClass('redBanner') == false){
+		$('body').addClass('redBanner');
+	}
 	var siren = document.getElementById('siren');
-	siren.play();
+	if(siren.paused && sirenActive == true){
+		siren.play();
+	}
 }
 
 function techAlertStop(){
@@ -233,7 +274,7 @@ function techAlertStop(){
 }
 
 function redAlertStop(){
-	$('body').removeClass('alarm');
+	$('body').removeClass('alarm').removeClass('redBanner');
 	var siren = document.getElementById('siren');
 	siren.load();
 	siren.pause();
@@ -250,9 +291,9 @@ jQuery(document).ready(function(){
 		var data = JSON.parse(e.data);
 		//load users + login
 		if(data.type == 'userData' && data.update == false){
-			allUsers = JSON.parse(data.data);
-			for (var i=0; i<=allUsers.usersLength-1;i++){
-				userCodeBase.push(allUsers[i].code);
+			allUsers = JSON.parse(data.data).users;
+			for (var user in allUsers){
+				userCodeBase.push(allUsers[user].code);
 			}
 			if(getCookie('logged').length == 0){
 				userName = prompt('STATE YOUR NAME');
@@ -284,12 +325,15 @@ jQuery(document).ready(function(){
 		if(data.type == 'medJournal'){
 			$('.medJournal').html(data.data);
 		}
+		if(data.type == 'bortJournal'){
+			$('.bortJournal').html(data.data);
+		}
 		//load date
 		if(data.type == 'dateData'){
 			if(isLogged == true){
 				var CurrentDate = new Date();
 				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
-				$('.welcome').html('<b>Привет, '+userProfile.name+'. ' +
+				$('.welcome').html('<b>Привет, '+userProfile.job+' '+userProfile.name+'. ' +
 				'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 				'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
 				'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
@@ -301,11 +345,9 @@ jQuery(document).ready(function(){
 		}
 
 		if(data.type == 'redBanner'){
-			if(redBanner == false){
-				redBanner = true;
+			if(data.data == true){
 				redAlertStart();
 			}else{
-				redBanner = false;
 				redAlertStop();
 			}
 		}
