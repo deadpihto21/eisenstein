@@ -166,7 +166,8 @@ function afterLogin() {
 		$(this).parent().hide();
 		$(this).parent().prev().show();
 	});
-	if(userProfile.permissions.indexOf('omni') > 0){
+	if(userProfile.permissions.indexOf('omni') > 0
+	||(userProfile.permissions.indexOf('captian') > 0 && redBanner == true)){
 		$('#specialChat').show();
 	}
 
