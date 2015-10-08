@@ -88,7 +88,7 @@ function afterLogin() {
 		$('.medJournal').val('');
 	});
 	$('.bortJournal-entrySend').on('click', function(){
-		if(userProfile.permissions.indexOf('capitan') > 0){
+		if(userProfile.permissions.indexOf('capitan') > 0 || userProfile.permissions.indexOf('omni') > 0){
 			var topic = $('.bortJournal-topic').val();
 			var text = $('.bortJournal-entry').val();
 			var date = new Date();
