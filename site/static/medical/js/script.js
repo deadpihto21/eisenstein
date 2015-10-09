@@ -13,10 +13,10 @@ $( function() {
 		var gm = $("input[name='gm']").val();
 		var kanzi = $("input[name='kanzi']").val();
 		var allcame = $("input[name='allcame']").val();
-		if(!vk) vk = '00000000';
-		if(!gm) gm = '00000000';
-		if(!kanzi) kanzi = '00000000';
-		if(!allcame) allcame = '00000000';
+		if(!vk) vk = '0000000';
+		if(!gm) gm = '0000000';
+		if(!kanzi) kanzi = '0000000';
+		if(!allcame) allcame = '0000000';
 
 		var code = vk + '-' + gm + '-' + kanzi + '-' + allcame;
 		//console.log(code);
@@ -29,14 +29,14 @@ $( function() {
 			success: function(msg) {
 				if(msg[code]) {
 					$('.medical-data').html(msg[code].treatment)
-					console.log(msg[code].treatment);
 				} else {
 					console.log('Неизвестный код');
 					$('.medical-data').html('Неизвестный код')
 				}
 			},
-			error: function() {
-				alert('Ошибка');
+			error: function(msg) {
+				//alert('Ошибка');
+				console.log(msg)
 				$('.medical-data').html('Ошибка чтения данных')
 			}				
 		});	
