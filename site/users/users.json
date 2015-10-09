@@ -2,33 +2,63 @@
 	"users":[
 		{
 			"name": "Таня Орт",
-			"job": "оператор нейросети",
-			"code": "2A6-1488",
-			"permissions":"['med', 'general']"
+			"job": "врач-оператор нейросети",
+			"code": "111",
+			"permissions":"['med', 'medJournal', 'anabioz']"
 		},
 		{
 			"name": "Таня Орт2",
-			"job": "оператор нейросети",
-			"code": "333",
+			"job": "врач-оператор нейросети",
+			"code": "222",
 			"permissions":"['omni']"
-		},
-		{
-			"name": "Таня Орт3",
-			"job": "оператор нейросети",
-			"code": "111",
-			"permissions":"['med', 'general']"
-		},
-		{
-			"name": "Эйзенштейн",
-			"job": "ИИ",
-			"code": "yobapeka1488",
-			"permissions":"['omni', 'admin']"
 		},
 		{
 			"name": "Алиса Адерли",
 			"job": "капитан",
+			"code": "333",
+			"permissions":"['anabioz', 'captain', 'bortJournal']"
+		},
+		{
+			"name": "Джейсон Спарк",
+			"job": "бортинженер",
 			"code": "444",
-			"permissions":"['anabioz', 'captain', bortJournal]"
+			"permissions":"['tech', 'anabioz']"
+		},
+		{
+			"name": "Стеван Маркович",
+			"job": "астрофизик",
+			"code": "555",
+			"permissions":"['anabioz']"
+		},
+		{
+			"name": "Ребекка МакСтоун",
+			"job": "старший помошник-нейрооператор",
+			"code": "666",
+			"permissions":"['anabioz']"
+		},
+		{
+			"name": "Марисса Купер",
+			"job": "врач",
+			"code": "777",
+			"permissions":"['med', 'medJournal', 'anabioz', 'tech']"
+		},
+		{
+			"name": "Джеймс Говард Криспин Хантингтон",
+			"job": "навигатор",
+			"code": "888",
+			"permissions":"['anabioz']"
+		},
+		{
+			"name": "Саймон Митчел",
+			"job": "врач",
+			"code": "999",
+			"permissions":"['med', 'medJournal', 'anabioz']"
+		},
+		{
+			"name": "Эйзенштейн",
+			"job": "виртуальный интерфейс корабля",
+			"code": "yobapeka1488",
+			"permissions":"['omni', 'admin', 'anabioz']"
 		}
 	]
 }

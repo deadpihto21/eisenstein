@@ -7,7 +7,11 @@ var staticSiteOptions = {
 	maxAge: 1000 * 60 * 60
 };
 var WebSocketServer = require('ws').Server,
-	wss = new WebSocketServer({port: 8080});
+	wss = new WebSocketServer(
+		{
+			port: 8080
+		}
+	);
 var redBanner = false;
 
 wss.broadcast = function broadcast(data) {
