@@ -1,5 +1,4 @@
-
-var connection = new WebSocket('ws://192.168.0.106:8080');
+var connection;
 var userCodeBase = [];
 var allUsers = {};
 var userName = '';
@@ -86,7 +85,7 @@ jQuery(document).ready(function(){
 		if(data.type == 'dateData'){
 			if(isLogged == true){
 				var CurrentDate = new Date();
-				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+				CurrentDate.setMonth(CurrentDate.getMonth() + 5676);
 				$('.welcome').html('<b>Привет, '+userProfile.job+' '+userProfile.name+'. ' +
 				'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 				'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
@@ -122,6 +121,7 @@ function afterLogin() {
 				type:"redBanner",
 				redBanner:true
 			}));
+			alert('REDBANNERSTARTEDBLYA');
 		});
 	}
 	$('#chatSend').on('click', function(){
@@ -133,24 +133,46 @@ function afterLogin() {
 				chatMessage:chatMessage
 			}));
 		}
-		$('#chat').val('');
+	});
+
+	$('.redBannerCaptainStart').on('click', function(){
+		var captain;
+		var xo;
+		for (var user in allUsers){
+			if(allUsers[user].permissions.indexOf('captain') > 0){
+				captain = allUsers[user].code
+			}
+			if(allUsers[user].permissions.indexOf('xo') > 0){
+				xo = allUsers[user].code
+			}
+		}
+		if($('.captain-code').val() == captain && $('.xo-code').val() == xo){
+			connection.send(JSON.stringify({
+				type:"redBanner",
+				redBanner:true
+			}));
+			alert('RED BANNER FLAG CHANGED');
+		}else{
+			alert('PERMISSION DENIED');
+		}
 	});
 
 	$('#chatSendSpec').on('click', function(){
 		var text = $('#chatSpec').val();
-		var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
-		connection.send(JSON.stringify({
-			type:"specChat",
-			specChatMessage:chatMessage
-		}));
-		$('#chat').val('');
+		if(text.length > 0) {
+			var chatMessage = '<div>' + '<span style="font-weight: bold">' + userProfile.name + ': </span>' + text + '</div>';
+			connection.send(JSON.stringify({
+				type: "specChat",
+				specChatMessage: chatMessage
+			}));
+		}
 	});
 
 	$('.medJournal-entrySend').on('click', function(){
 		var topic = $('.medJournal-topic').val();
 		var text = $('.medJournal-entry').val();
 		var date = new Date();
-		date.setMonth(CurrentDate.getMonth() + 5664);
+		date.setMonth(CurrentDate.getMonth() + 5676);
 		var journalEntry = '<div class="journalEntrySingle">'+
 			'<div>Врач: <span style="font-weight: bold">'+
 			userProfile.name +
@@ -173,7 +195,7 @@ function afterLogin() {
 			var topic = $('.bortJournal-topic').val();
 			var text = $('.bortJournal-entry').val();
 			var date = new Date();
-			date.setMonth(CurrentDate.getMonth() + 5664);
+			date.setMonth(CurrentDate.getMonth() + 5676);
 			var journalEntry = '<div class="journalEntrySingle">'+
 				'<div>Капитан: <span style="font-weight: bold">'+
 				userProfile.name +
@@ -204,7 +226,7 @@ function afterLogin() {
 		}
 	});
 	var CurrentDate = new Date();
-	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+	CurrentDate.setMonth(CurrentDate.getMonth() + 5676);
 	$('.welcome').html('<b>Привет, '+userProfile.job +' '+ userProfile.name+'. ' +
 	'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 	'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
@@ -233,7 +255,8 @@ function afterLogin() {
 		if(isLogged == true){
 			if(userProfile.permissions.indexOf($(this).parent().attr('id')) > 0
 				|| userProfile.permissions.indexOf('omni') > 0
-				|| $(this).parent().attr('id')== 'bortJournal'){
+				|| $(this).parent().attr('id') == 'bortJournal'
+				|| $(this).parent().attr('id')== 'captain'){
 				$(this).hide();
 				$(this).next().show();
 			}

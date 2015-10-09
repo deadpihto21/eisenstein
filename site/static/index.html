@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<title>Эйзенштейн</title>
 	<script src="jquery.js" type="text/javascript"></script>
-	<script src="knockout-3.3.0.js" type="text/javascript"></script>
 	<script src="eisenstein.js" type="text/javascript"></script>
 	<script src="medical/js/script.js" type="text/javascript"></script>	
 	<script src="anabioz/js/script.js" type="text/javascript"></script>		
@@ -165,8 +164,32 @@
 				</a>
 			</div>
 		</div>
-		<div id="redBanner" style="display: none;background: red; color:white; font-weight: bold;" class="system-container redBanner-container">
-			ЕБАШЬ!
+		<div id="captain" class="system-container captain-container">
+			<a href="#" class="systemOpener captain-opener">
+				Запуск особого положения
+			</a>
+			<div class="system-inner captain-inner">
+				<h4>Для введения особого положения на корабле, введите коды доступа командного состава</h4>
+				<div class="captain">
+					<input type="password" style="width: 80%" class="captain-code" placeholder="Код капитана">
+					<br>
+					<br>
+					<input type="password" style="width: 80%" class="xo-code" placeholder="Код старшего помошника">
+					<br>
+					<br>
+				</div>
+				<button class="redBannerCaptainStart">Переключить Красный Вымпел</button>
+				<br>
+				<span>
+					ВНИМАНИЕ! Запустить и остановить особое положение "Красный Вымпел" при помощи кодов доступа могут только исполняющие обязанности капитана и старшего помошника, если последний назначен.
+					<br>
+					Также запустить "Красный вымпел" может лично капитан через подключение к ЦВК корабля через нейроинтерфейс.
+				</span>
+
+				<a href="#" class="systemClose">
+					Закрыть
+				</a>
+			</div>
 		</div>
 		<div id="bortJournal" class="system-container bortJournal-container">
 			<a href="#" class="systemOpener bortJournal-opener">
@@ -193,6 +216,9 @@
 		</div>
 	</div>
 	<div class="chat">
+		<div id="redBanner" style="display: none;background: red; color:white; font-weight: bold;" class="system-container redBanner-container">
+			ЕБАШЬ!
+		</div>
 		<textarea id="chat" placeholder="чят" type="text"></textarea>
 		<button id="chatSend">послать</button>
 		<div id="chatWindow"></div>
