@@ -33,7 +33,7 @@
 		{
 			"name": "Ребекка МакСтоун",
 			"job": "старший помошник-нейрооператор",
-			"code": "666",
+			"code": "111994",
 			"permissions":"['anabioz']"
 		},
 		{
@@ -51,7 +51,7 @@
 		{
 			"name": "Саймон Митчел",
 			"job": "врач",
-			"code": "999",
+			"code": "usshelios",
 			"permissions":"['med', 'medJournal', 'anabioz']"
 		},
 		{

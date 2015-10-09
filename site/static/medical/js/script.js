@@ -55,9 +55,18 @@ $( function() {
 			dataType: 'json',
 			success: function(msg) {
 				for(var i = 0; i < person_max_count; i++) {
-					console.log(msg)
-					/*if(msg.i[search_code] == search_key) {
-						$('.medical-data').html(msg[i]['note']);
+					if(msg[i][search_code] == search_key) {
+						console.log(msg[i]['note'])
+						/*$.ajax({
+							type: 'GET',
+		   					url: msg[i]['note'],
+		   					dataType: 'html',
+							success: function(med_sard) {
+								console.log(med_sard);
+							}
+						})*/
+						$(".medical-data").load('/medical/js/' + msg[i]['note']);
+						//$('.medical-data').html(msg[i]['note']);
 						break;
 					} else {
 						switch (search_code) {
@@ -68,7 +77,7 @@ $( function() {
 								$('.medical-data').html('Медицинской карты для человека с таким личным кодом нет в базе!');
 								break;																		
 						}
-					}*/
+					}
 				}
 			},
 			error: function() {
