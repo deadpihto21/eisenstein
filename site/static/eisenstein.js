@@ -85,7 +85,7 @@ jQuery(document).ready(function(){
 		if(data.type == 'dateData'){
 			if(isLogged == true){
 				var CurrentDate = new Date();
-				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+				CurrentDate.setMonth(CurrentDate.getMonth() + 5676);
 				$('.welcome').html('<b>Привет, '+userProfile.job+' '+userProfile.name+'. ' +
 				'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 				'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
@@ -146,7 +146,6 @@ function afterLogin() {
 				xo = allUsers[user].code
 			}
 		}
-		console.log($('.xo-code') == xo);
 		if($('.captain-code').val() == captain && $('.xo-code').val() == xo){
 			connection.send(JSON.stringify({
 				type:"redBanner",
@@ -173,7 +172,7 @@ function afterLogin() {
 		var topic = $('.medJournal-topic').val();
 		var text = $('.medJournal-entry').val();
 		var date = new Date();
-		date.setMonth(CurrentDate.getMonth() + 5664);
+		date.setMonth(CurrentDate.getMonth() + 5676);
 		var journalEntry = '<div class="journalEntrySingle">'+
 			'<div>Врач: <span style="font-weight: bold">'+
 			userProfile.name +
@@ -196,7 +195,7 @@ function afterLogin() {
 			var topic = $('.bortJournal-topic').val();
 			var text = $('.bortJournal-entry').val();
 			var date = new Date();
-			date.setMonth(CurrentDate.getMonth() + 5664);
+			date.setMonth(CurrentDate.getMonth() + 5676);
 			var journalEntry = '<div class="journalEntrySingle">'+
 				'<div>Капитан: <span style="font-weight: bold">'+
 				userProfile.name +
@@ -227,7 +226,7 @@ function afterLogin() {
 		}
 	});
 	var CurrentDate = new Date();
-	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+	CurrentDate.setMonth(CurrentDate.getMonth() + 5676);
 	$('.welcome').html('<b>Привет, '+userProfile.job +' '+ userProfile.name+'. ' +
 	'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
 	'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
