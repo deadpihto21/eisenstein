@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 var connection = new WebSocket('ws://192.168.0.106:8080');
 //var connection = new WebSocket('ws://127.0.0.1:8080');
+=======
+//var connection = new WebSocket('ws://192.168.1.14:8080');
+var connection;
+>>>>>>> df3e49211d99fda2e86d8052bae1feb1540a4420
 var userCodeBase = [];
 var allUsers = {};
 var userName = '';
@@ -7,8 +12,7 @@ var userProfile = {};
 var isLogged = false;
 var techSystems = [];
 var redBanner = false;
-var sirenActive = false;
-
+var sirenActive = true;
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
@@ -31,6 +35,86 @@ function getCookie(cname){
 function deleteCookie( name ) {
 	document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+jQuery(document).ready(function(){
+	connection = new WebSocket('ws://127.0.0.1:8080');
+
+	connection.onclose = function(){
+		alert('CONNECTION ABORTED');
+		location.reload(true);
+	};
+	connection.onmessage = function (e) {
+		var data = JSON.parse(e.data);
+		//load users + login
+		if(data.type == 'userData' && data.update == false){
+			allUsers = JSON.parse(data.data).users;
+			for (var user in allUsers){
+				userCodeBase.push(allUsers[user].code);
+			}
+			if(getCookie('logged').length == 0){
+				userName = prompt('STATE YOUR NAME');
+				if(userCodeBase.indexOf(userName) > -1){
+					setCookie('logged', userName, 365);
+					alert('WELCOME');
+					userProfile = allUsers[userCodeBase.indexOf(userName)];
+					afterLogin();
+				}else{
+					alert('PERMISSION DENIED');
+					location.reload(true);
+				}
+			}else{
+				userName = getCookie('logged');
+				userProfile = allUsers[userCodeBase.indexOf(userName)];
+				afterLogin();
+			}
+		}else if(data.type == 'userData' && data.update == true){
+			deleteCookie('logged');
+			location.reload(true);
+		}
+		//load chat
+		if(data.type == 'chatData'){
+			$('#chatWindow').html(data.data);
+		}
+		//load specail chat
+		if(data.type == 'specChatData'){
+			$('#chatWindowSpec').html(data.data);
+		}
+		//load med log
+		if(data.type == 'medJournal'){
+			$('.medJournal').html(data.data);
+		}
+		//load ship log
+		if(data.type == 'bortJournal'){
+			$('.bortJournal').html(data.data);
+		}
+		//load date
+		if(data.type == 'dateData'){
+			if(isLogged == true){
+				var CurrentDate = new Date();
+				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
+				$('.welcome').html('<b>Привет, '+userProfile.job+' '+userProfile.name+'. ' +
+				'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
+				'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
+				'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
+			}
+		}
+		//load tech data
+		if(data.type == 'techData'){
+			techBuild(data.data);
+		}
+		//get red banner flag
+		if(data.type == 'redBanner'){
+			if(data.data == true){
+				redAlertStart();
+			}else{
+				redAlertStop();
+			}
+		}
+	};
+});
+
+
+
 
 
 function afterLogin() {
@@ -80,7 +164,7 @@ function afterLogin() {
 			date.toLocaleString()
 			+'</span></div>' +
 			'<div>Тема: <span style="font-weight: bold">' +
-			 topic +
+			topic +
 			'</span></div>' +
 			'<div>Запись: ' +text+'</div></div>';
 		connection.send(JSON.stringify({
@@ -103,7 +187,7 @@ function afterLogin() {
 				date.toLocaleString()
 				+'</span></div>' +
 				'<div>Тема: <span style="font-weight: bold">' +
-				 topic +
+				topic +
 				'</span></div>' +
 				'<div>Запись: ' +text+'</div></div>';
 			connection.send(JSON.stringify({
@@ -127,9 +211,9 @@ function afterLogin() {
 	var CurrentDate = new Date();
 	CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
 	$('.welcome').html('<b>Привет, '+userProfile.job +' '+ userProfile.name+'. ' +
-		'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
-		'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
-		'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
+	'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
+	'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
+	'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
 
 	$(document).on('click','.userExit', function(){
 		deleteCookie('logged');
@@ -169,7 +253,7 @@ function afterLogin() {
 		$(this).parent().prev().show();
 	});
 	if(userProfile.permissions.indexOf('omni') > 0
-	||(userProfile.permissions.indexOf('captian') > 0 && redBanner == true)){
+		||(userProfile.permissions.indexOf('captian') > 0 && redBanner == true)){
 		$('#specialChat').show();
 	}
 
@@ -185,12 +269,12 @@ function techBuild(data){
 	techSystems = tempSysArr;
 	for (var i=0; i <= techSystems.length -1 ; i++){
 		var system = $('<div class="techSystemSingle ' +
-			'system'+i+'-container' +
-			'"><span class="systemName">' +
-			techSystems[i].name +
-			'</span><span class="systemState">' +
-			techSystems[i].statePercent +
-			'</span></div>');
+		'system'+i+'-container' +
+		'"><span class="systemName">' +
+		techSystems[i].name +
+		'</span><span class="systemState">' +
+		techSystems[i].statePercent +
+		'</span></div>');
 		if(techSystems[i].statePercent >= 80){
 			system.removeClass('red');
 			system.removeClass('green');
@@ -246,6 +330,7 @@ function techRepaire(system){
 
 	return techSystems[system].name;
 }
+
 function techAlertStart(){
 	if($('body').hasClass('alarm') == false){
 		$('body').addClass('alarm');
@@ -282,77 +367,3 @@ function redAlertStop(){
 	siren.load();
 	siren.pause();
 }
-
-jQuery(document).ready(function(){
-
-	connection.onclose = function(){
-		alert('CONNECTION ABORTED');
-		location.reload(true);
-	};
-	connection.onmessage = function (e) {
-
-		var data = JSON.parse(e.data);
-		//load users + login
-		if(data.type == 'userData' && data.update == false){
-			allUsers = JSON.parse(data.data).users;
-			for (var user in allUsers){
-				userCodeBase.push(allUsers[user].code);
-			}
-			if(getCookie('logged').length == 0){
-				userName = prompt('STATE YOUR NAME');
-				if(userCodeBase.indexOf(userName) > -1){
-					setCookie('logged', userName, 365);
-					alert('WELCOME');
-					userProfile = allUsers[userCodeBase.indexOf(userName)];
-					afterLogin();
-				}else{
-					alert('PERMISSION DENIED');
-					location.reload(true);
-				}
-			}else{
-				userName = getCookie('logged');
-				userProfile = allUsers[userCodeBase.indexOf(userName)];
-				afterLogin();
-			}
-		}else if(data.type == 'userData' && data.update == true){
-			deleteCookie('logged');
-			location.reload(true);
-		}
-		//load chat
-		if(data.type == 'chatData'){
-			$('#chatWindow').html(data.data);
-		}
-		if(data.type == 'specChatData'){
-			$('#chatWindowSpec').html(data.data);
-		}
-		if(data.type == 'medJournal'){
-			$('.medJournal').html(data.data);
-		}
-		if(data.type == 'bortJournal'){
-			$('.bortJournal').html(data.data);
-		}
-		//load date
-		if(data.type == 'dateData'){
-			if(isLogged == true){
-				var CurrentDate = new Date();
-				CurrentDate.setMonth(CurrentDate.getMonth() + 5664);
-				$('.welcome').html('<b>Привет, '+userProfile.job+' '+userProfile.name+'. ' +
-				'Дата : '+CurrentDate.toLocaleDateString()+'. ' +
-				'Бортовое время: '+CurrentDate.toLocaleTimeString()+'</b>' +
-				'<br /><a href="#" style="display: block" class="userExit">Выйти</a>');
-			}
-		}
-		//load tech data
-		if(data.type == 'techData'){
-			techBuild(data.data);
-		}
-
-		if(data.type == 'redBanner'){
-			if(data.data == true){
-				redAlertStart();
-			}else{
-				redAlertStop();
-			}
-		}
-	};
-});
