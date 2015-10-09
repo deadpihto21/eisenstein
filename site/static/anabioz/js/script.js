@@ -131,7 +131,7 @@ $( function() {
 					var flag = false;
 					for(var i = 0; i < person_max_count; i++) {
 						if(msg[i][search_code] == search_key) {
-							if((search_code != 'name') || (search_code != 'age')) {
+							if((search_code != 'name') && (search_code != 'age')) {
 								table = table + '<tr><td>' + search_key + '</td><td>' + msg[i]['name'] + '</td></tr>';								
 							} else {
 								table = table + '<tr><td><a href="#" class="single-link">' + i + '</a></td><td>' + msg[i]['name'] + '</td></tr>';

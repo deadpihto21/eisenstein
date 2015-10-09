@@ -1,5 +1,5 @@
-//var connection = new WebSocket('ws://192.168.1.14:8080');
-var connection = new WebSocket('ws://127.0.0.1:8080');
+var connection = new WebSocket('ws://192.168.0.106:8080');
+//var connection = new WebSocket('ws://127.0.0.1:8080');
 var userCodeBase = [];
 var allUsers = {};
 var userName = '';
@@ -47,11 +47,13 @@ function afterLogin() {
 	}
 	$('#chatSend').on('click', function(){
 		var text = $('#chat').val();
-		var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
-		connection.send(JSON.stringify({
-			type:"chat",
-			chatMessage:chatMessage
-		}));
+		if(text.length > 0){
+			var chatMessage = '<div>'+ '<span style="font-weight: bold">'+ userProfile.name +': </span>' +text+'</div>';
+			connection.send(JSON.stringify({
+				type:"chat",
+				chatMessage:chatMessage
+			}));
+		}
 		$('#chat').val('');
 	});
 

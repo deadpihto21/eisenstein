@@ -1,3 +1,4 @@
-<div><span style="font-weight: bold">Эйзенштейн: </span>some chat message
-</div><div><span style="font-weight: bold">Таня Орт2: </span>Суп чят
+<div><span style="font-weight: bold">Эйзенштейн: </span>Чят хуят</div><div><span style="font-weight: bold">Эйзенштейн: </span>Муахаха</div><div><span style="font-weight: bold">Таня Орт2: </span>Ну типа привет.</div><div><span style="font-weight: bold">Таня Орт2: </span>фывафыва
+</div><div><span style="font-weight: bold">Таня Орт2: </span>фывпафыв
+</div><div><span style="font-weight: bold">Таня Орт2: </span>фыва
 </div>
