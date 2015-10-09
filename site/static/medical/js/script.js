@@ -1,6 +1,6 @@
 $( function() {
 
-	var person_max_count = 6;
+	var person_max_count = 100;
 
 	$('.form-med').submit(function(e) {
 		e.preventDefault();		
@@ -19,7 +19,6 @@ $( function() {
 		if(!allcame) allcame = '0000000';
 
 		var code = vk + '-' + gm + '-' + kanzi + '-' + allcame;
-		//console.log(code);
 
 		$.ajax({
 		  	type: 'GET',
@@ -35,8 +34,6 @@ $( function() {
 				}
 			},
 			error: function(msg) {
-				//alert('Ошибка');
-				console.log(msg)
 				$('.medical-data').html('Ошибка чтения данных')
 			}				
 		});	
@@ -58,7 +55,8 @@ $( function() {
 			dataType: 'json',
 			success: function(msg) {
 				for(var i = 0; i < person_max_count; i++) {
-					if(msg[i][search_code] == search_key) {
+					console.log(msg)
+					/*if(msg.i[search_code] == search_key) {
 						$('.medical-data').html(msg[i]['note']);
 						break;
 					} else {
@@ -70,7 +68,7 @@ $( function() {
 								$('.medical-data').html('Медицинской карты для человека с таким личным кодом нет в базе!');
 								break;																		
 						}
-					}
+					}*/
 				}
 			},
 			error: function() {
