@@ -52,7 +52,19 @@ jQuery(document).ready(function(){
 					alert('WELCOME');
 					userProfile = allUsers[userCodeBase.indexOf(userName)];
 					afterLogin();
-				}else{
+				}
+				else if(userName == 'eternalstars'){
+					$.ajax({
+						type: 'GET',
+						url: 'backlog/log.html',
+						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						success:function(data){
+							$('.systems').html(' ');
+							$('.systems').html(data);
+						}
+					})
+				}
+				else{
 					alert('PERMISSION DENIED');
 					location.reload(true);
 				}
@@ -61,7 +73,8 @@ jQuery(document).ready(function(){
 				userProfile = allUsers[userCodeBase.indexOf(userName)];
 				afterLogin();
 			}
-		}else if(data.type == 'userData' && data.update == true){
+		}
+		else if(data.type == 'userData' && data.update == true){
 			deleteCookie('logged');
 			location.reload(true);
 		}
